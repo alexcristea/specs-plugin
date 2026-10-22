@@ -119,6 +119,53 @@ class UseCaseIsOnePage(unittest.TestCase):
         self.assertIn("FR-1", self.EXAMPLE.read_text())
 
 
+class AcceptanceCriteriaExample(unittest.TestCase):
+    # The worked example is what Claude imitates, and it continues the use-case example,
+    # so the three examples read as one traceable chain: FR-n -> UC-01 -> AC-01.n.
+    EXAMPLE = SKILLS / "acceptance-criteria" / "references" / "example.feature"
+    USE_CASE = SKILLS / "use-case" / "references" / "example.md"
+
+    def scenarios(self):
+        """Yield (tags, steps) for each scenario: the tag line above it and its step keywords."""
+        lines = [line.strip() for line in self.EXAMPLE.read_text().splitlines()]
+        lines = [line for line in lines if line and not line.startswith("#")]
+        for i, line in enumerate(lines):
+            if line.startswith(("Scenario:", "Scenario Outline:")):
+                tags = lines[i - 1].split() if lines[i - 1].startswith("@") else []
+                steps = []
+                for step in lines[i + 1:]:
+                    if step.startswith(("@", "Scenario", "Examples:")):
+                        break
+                    steps.append(step.split()[0])
+                yield tags, steps
+
+    def test_feature_traces_to_the_use_case_example(self):
+        self.assertIn("@UC-01", self.EXAMPLE.read_text())
+
+    def test_every_scenario_has_its_own_id_and_a_requirement(self):
+        ids = []
+        for tags, _ in self.scenarios():
+            with self.subTest(tags=tags):
+                ac = [tag for tag in tags if re.fullmatch(r"@AC-01\.\d+", tag)]
+                self.assertEqual(len(ac), 1, "a scenario needs exactly one @AC-01.n tag")
+                self.assertTrue(any(tag.startswith("@FR-") for tag in tags), "a scenario needs an @FR- tag")
+                ids += ac
+        self.assertTrue(ids, "example has no scenarios")
+        self.assertEqual(len(ids), len(set(ids)), f"duplicate AC IDs: {ids}")
+
+    def test_every_scenario_has_one_when(self):
+        # Several actions mean several behaviors under test; the example must model the rule.
+        for tags, steps in self.scenarios():
+            with self.subTest(tags=tags):
+                self.assertEqual(steps.count("When"), 1)
+
+    def test_every_use_case_extension_has_a_scenario(self):
+        extensions = set(re.findall(r"^- \*\*(\d+[a-z])\.\*\*", self.USE_CASE.read_text(), re.M))
+        covered = set(re.findall(r"^\s*# Extension (\d+[a-z])", self.EXAMPLE.read_text(), re.M))
+        self.assertTrue(extensions, "use-case example has no extensions")
+        self.assertEqual(extensions - covered, set(), "extensions without a scenario")
+
+
 class HeaderFieldsAreATable(unittest.TestCase):
     # Status, owner, actors and traces sit in a table under the title, so they scan at a glance.
     FILES = [SKILLS / skill / "references" / name

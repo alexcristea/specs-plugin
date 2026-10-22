@@ -21,7 +21,7 @@ Feature: <Use case goal, e.g. Invite a teammate>
     And <the invitation is shown as pending>
     And <the invitation expires in 7 days>
 
-  # Extension 3a
+  # Extension 1a
   @AC-<nn>.2 @FR-1
   Scenario Outline: <An invalid email address is rejected>
     When <the admin invites "<email>" as a Member>
@@ -33,7 +33,7 @@ Feature: <Use case goal, e.g. Invite a teammate>
       | sam@            | Enter a complete email address    |
       | sam example.com | Email addresses can't have spaces |
 
-  # Extension 3b
+  # Extension 1b
   @AC-<nn>.3 @FR-1
   Scenario: <Inviting an existing member is rejected>
     Given <"sam@example.com" is already a member of "Acme">

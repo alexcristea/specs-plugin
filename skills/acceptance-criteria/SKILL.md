@@ -23,7 +23,7 @@ If the repo already has `.feature` files, read a few and follow their language, 
 
 ## 2. Write the scenarios
 
-Use the layout in `references/template.md`: one `.feature` file per use case, `specs/<feature>/acceptance/UC-<nn>-<slug>.feature`, matching the use case's file name.
+Use the layout in `references/template.md`: one `.feature` file per use case, `specs/<feature>/acceptance/UC-<nn>-<slug>.feature`, matching the use case's file name. Match the step phrasing and coverage of the worked example in `references/example.feature`, which turns the `use-case` skill's example (UC-01, Invite a teammate) into scenarios: every extension covered, a retry split into two scenarios so each has one `When`, and an unanswered open question left without a scenario rather than guessed.
 
 - **Declarative, not imperative.** `When the admin invites "sam@example.com" as a Member`, not `When I click "Invite" And I type "sam@example.com" in "Email"`. UI-driven steps break on every redesign and hide what is being tested.
 - **One `When` per scenario.** Several actions in a row mean several behaviors under test; split the scenario, or move the earlier actions into `Given` as state.
