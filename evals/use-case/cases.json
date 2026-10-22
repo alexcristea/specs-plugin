@@ -1,0 +1,64 @@
+{
+  "skill_name": "use-case",
+  "evals": [
+    {
+      "id": 0,
+      "name": "from-prd-path",
+      "fixture": "from_prd.sh",
+      "cwd": ".",
+      "prompt": "/specs:use-case docs/specs/book-swaps/prd.md write the use cases. I'm away, go ahead without me.",
+      "expected_output": "Two or more use case files in docs/specs/book-swaps/use-cases/UC-nn-<slug>.md, each under 400 words with 3-9 intention-level steps, extensions, and a Traces to row of plain FR- IDs plus one PRD link; every Must and Should requirement covered.",
+      "path": "^docs/specs/book-swaps/use-cases/UC-\\d\\d-[a-z0-9-]+\\.md$",
+      "assertions": [
+        "Use cases written in use-cases/ beside the PRD",
+        "Nothing else changed",
+        "Every use case under 400 words",
+        "Every main success scenario has 3 to 9 steps",
+        "Every use case has extensions",
+        "Traces to row has plain FR- IDs and a PRD link",
+        "Every Must and Should requirement is traced",
+        "Steps are intentions, not UI",
+        "Reported the path back to the user (notes.md)",
+        "Not committed"
+      ]
+    },
+    {
+      "id": 1,
+      "name": "no-prd-root-fallback",
+      "fixture": "no_prd_monorepo.sh",
+      "cwd": "packages/web",
+      "prompt": "/specs:use-case a member returns a borrowed book to its owner at a club meeting. There's no PRD yet, just write the use case.",
+      "expected_output": "No PRD and no specs; started in packages/web: one use case at specs/<slug>/use-cases/UC-01-<slug>.md at the repo root, Traces to 'none (no PRD yet)' with no invented FR- IDs.",
+      "path": "^specs/[a-z0-9-]+/use-cases/UC-01-[a-z0-9-]+\\.md$",
+      "assertions": [
+        "Use cases written at specs/ in the repo root",
+        "Nothing else changed",
+        "Every use case under 400 words",
+        "Every main success scenario has 3 to 9 steps",
+        "Every use case has extensions",
+        "No FR- IDs invented without a PRD",
+        "Steps are intentions, not UI",
+        "Reported the path back to the user (notes.md)",
+        "Not committed"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "print-several",
+      "fixture": "from_prd.sh",
+      "cwd": ".",
+      "print": true,
+      "prompt": "/specs:use-case --print docs/specs/book-swaps/prd.md",
+      "expected_output": "Nothing written; the reply is two or more use cases, each preceded by a <!-- file: <path> --> marker, with no preamble, report or code fence.",
+      "path": "^$",
+      "assertions": [
+        "Nothing saved",
+        "Reply is only the use cases, each after a file marker",
+        "Every use case under 400 words",
+        "Every main success scenario has 3 to 9 steps",
+        "Every use case has extensions",
+        "Steps are intentions, not UI"
+      ]
+    }
+  ]
+}

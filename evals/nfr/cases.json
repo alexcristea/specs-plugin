@@ -1,0 +1,67 @@
+{
+  "skill_name": "nfr",
+  "evals": [
+    {
+      "id": 0,
+      "name": "beside-prd",
+      "fixture": "beside_prd.sh",
+      "cwd": ".",
+      "prompt": "/specs:nfr book swaps: what quality targets do we need? Draft it, I'll review.",
+      "expected_output": "docs/specs/book-swaps/nfr.md beside the PRD: NFR- rows each with a number, a Verified by from the four allowed values, scoped to FR- IDs, a Traces to row linking prd.md, guesses as Assumed:, under 400 words, no stack.",
+      "path": "^docs/specs/book-swaps/nfr\\.md$",
+      "assertions": [
+        "NFR file written beside the PRD",
+        "Exactly one file written, nothing else changed",
+        "Under 400 words",
+        "Every requirement has a number to measure",
+        "Every requirement says how it is verified (Scenario, Load test, Monitoring, Review)",
+        "Requirements are scoped to FR- IDs",
+        "Traces to row links the PRD next to it",
+        "Guesses listed as Assumed: under Open questions",
+        "Reported word count matches wc -w",
+        "No implementation detail from the README's stack",
+        "Reported the path back to the user (notes.md)",
+        "Not committed"
+      ]
+    },
+    {
+      "id": 1,
+      "name": "update-keeps-ids",
+      "fixture": "update.sh",
+      "cwd": ".",
+      "prompt": "/specs:nfr docs/specs/book-swaps/nfr.md borrow requests should reach the owner within 1 minute, not 5. And drop NFR-2, the platform availability target covers it now.",
+      "expected_output": "nfr.md updated in place: NFR-1 now says 1 minute, NFR-2 struck through with a reason, NFR-3 unchanged, nothing renumbered, Last updated bumped.",
+      "path": "^docs/specs/book-swaps/nfr\\.md$",
+      "assertions": [
+        "NFR file written beside the PRD",
+        "Exactly one file written, nothing else changed",
+        "NFR-1 tightened to 1 minute",
+        "NFR-2 struck through with a reason, not deleted or reused",
+        "NFR-3 unchanged",
+        "Last updated bumped",
+        "No implementation detail from the README's stack",
+        "Reported the path back to the user (notes.md)",
+        "Not committed"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "print",
+      "fixture": "beside_prd.sh",
+      "cwd": ".",
+      "print": true,
+      "prompt": "/specs:nfr --print docs/specs/book-swaps/prd.md",
+      "expected_output": "Nothing written; the reply is the NFR document alone, starting at its # title, with no preamble, report or code fence.",
+      "path": "^$",
+      "assertions": [
+        "Nothing saved",
+        "Reply is only the spec (starts at the title, no fence, no report)",
+        "Under 400 words",
+        "Every requirement has a number to measure",
+        "Every requirement says how it is verified (Scenario, Load test, Monitoring, Review)",
+        "Requirements are scoped to FR- IDs",
+        "No implementation detail from the README's stack"
+      ]
+    }
+  ]
+}
