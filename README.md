@@ -6,7 +6,7 @@ A Claude Code plugin for specs-driven development: write the product specs befor
 
 | Skill                        | Purpose                                                                                       |
 |------------------------------|-----------------------------------------------------------------------------------------------|
-| `/specs:prd`                 | Write or update a one-page PRD (under 600 words, a 1–2 minute read): one-sentence summary, problem and evidence, goals, non-goals, users, `FR-` requirements with MoSCoW priority, success metrics with a guardrail, risks, open questions. |
+| `/specs:prd`                 | Write or update a one-page PRD (about 450 words, 600 at most, a 1–2 minute read): one-sentence summary, problem and evidence, goals, non-goals, users, `FR-` requirements with MoSCoW priority, success metrics with a guardrail, risks, open questions. |
 | `/specs:nfr`                 | Write one-page non-functional requirements (under 400 words): `NFR-` IDs with a measurable target, the ISO 25010 quality, the `FR-` IDs they apply to, how each is verified (scenario, load test, monitoring, review) and MoSCoW priority. |
 | `/specs:use-case`            | Write one-page Cockburn-style use cases (under 400 words): actor, preconditions, guarantees, main success scenario and an extension for each step that can fail, traced to `FR-` IDs. |
 | `/specs:acceptance-criteria` | Write Gherkin scenarios for each use case path, tagged `@AC-01.1 @UC-01 @FR-1` (plus `@NFR-3` when a scenario checks a quality target), and report coverage gaps. |

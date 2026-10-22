@@ -63,7 +63,7 @@ After writing, compare the use cases with the PRD: every `Must` and `Should` fun
 
 ## 6. Report
 
-Tell the user which files you wrote, their word counts, the coverage gaps from §4, and the open questions. Suggest `acceptance-criteria` as the next step.
+Tell the user which files you wrote, their word counts, the coverage gaps from §4, and the open questions. Measure the word counts with `wc -w <files>` rather than estimating them: an estimate drifts, and a use case over 400 words needs cutting before you report, not after. Suggest `acceptance-criteria` as the next step.
 
 ## 7. With `--print`
 

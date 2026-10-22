@@ -70,7 +70,7 @@ Scenarios tag these IDs, and architecture decisions cite them as drivers, so:
 
 ## 5. Report
 
-Tell the user where the file is, its word count, how many requirements it has by priority and by **Verified by**, and the open questions and assumptions they need to settle. Then point to the next steps:
+Tell the user where the file is, its word count, how many requirements it has by priority and by **Verified by**, and the open questions and assumptions they need to settle. Measure the word count with `wc -w <file>` rather than estimating it: an estimate drifts, and a file over 400 words needs cutting before you report, not after. Then point to the next steps:
 
 - `acceptance-criteria` for the `Scenario` rows: each becomes a scenario in the `.feature` file of the use case (`UC-`) whose path it checks, with its own `AC-` ID and an `@NFR-` tag beside the `@FR-` one.
 - An architecture decision record for any target that forces a design choice (a latency target that rules out a synchronous call, a residency rule that picks a region), citing the `NFR-` IDs as its drivers. Offer it rather than writing it; ADRs belong with the architecture docs, not in `specs/`.

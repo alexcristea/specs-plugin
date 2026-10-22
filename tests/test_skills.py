@@ -82,10 +82,21 @@ class PrdIsOnePage(unittest.TestCase):
     # what Claude imitates, so it has to stay inside that budget itself.
     EXAMPLE = SKILLS / "prd" / "references" / "example.md"
     MAX_WORDS = 600
+    AIM_WORDS = 450
 
     def test_example_fits_on_one_page(self):
         words = len(self.EXAMPLE.read_text().split())
         self.assertLessEqual(words, self.MAX_WORDS, f"{self.EXAMPLE.relative_to(ROOT)} has {words} words")
+
+    def test_example_models_the_aim_not_the_ceiling(self):
+        # Claude writes up to whatever number it is given, so the example sits at the aim.
+        words = len(self.EXAMPLE.read_text().split())
+        self.assertLessEqual(words, self.AIM_WORDS, f"{self.EXAMPLE.relative_to(ROOT)} has {words} words")
+
+    def test_skill_states_the_aim_and_the_ceiling(self):
+        text = (SKILLS / "prd" / "SKILL.md").read_text()
+        self.assertIn(f"about {self.AIM_WORDS} words", text)
+        self.assertIn(f"{self.MAX_WORDS} is the ceiling", text)
 
     def test_example_summary_is_one_sentence(self):
         # The summary carries only what is being built; the why lives in Problem, right below it.
@@ -124,6 +135,16 @@ class SkillsTakeArguments(unittest.TestCase):
         for path in skill_files():
             with self.subTest(skill=path.parent.name):
                 self.assertIn("**`--print`", path.read_text())
+
+
+class WordCountsAreMeasured(unittest.TestCase):
+    def test_skills_that_report_a_word_count_measure_it(self):
+        # Estimated counts drift (reported 600, actually 605), so a skill that reports one runs wc.
+        for path in skill_files():
+            text = path.read_text()
+            if "word count" in text:
+                with self.subTest(skill=path.parent.name):
+                    self.assertIn("wc -w", text)
 
 
 class UseCaseIsOnePage(unittest.TestCase):

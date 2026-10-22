@@ -44,7 +44,7 @@ Read what the repo and the conversation already say first; don't ask the user fo
 
 Use the layout in `references/template.md`, and match the length and tone of the worked example in `references/example.md`. Leave out a section only if it would be empty for a real reason (an internal tool may have no risks worth naming); don't pad sections to fill the template.
 
-**Keep it to one page.** A PRD that takes longer than a minute or two to read gets skimmed, and the skimmed parts are where disagreements hide until the code exists. Aim for under 600 words, the size of the example; two printed pages is the hard ceiling. To stay there:
+**Keep it to one page.** A PRD that takes longer than a minute or two to read gets skimmed, and the skimmed parts are where disagreements hide until the code exists. Aim for about 450 words, the size of the example; 600 is the ceiling, not the target. Drafts grow on every revision, so starting near the ceiling leaves no room for the edits that follow. To stay there:
 
 - **Lead with a one-sentence summary** of what is being built and for whom. It is the line people paste into a ticket or a roadmap, so it has to stand on its own; leave the why to Problem, right below it. If the feature doesn't fit in one sentence, it isn't ready for a PRD yet.
 - **Prefer bullets and tables to paragraphs.** No paragraph longer than four sentences, no section with more than three bullets unless it is the requirements table.
@@ -73,7 +73,7 @@ Other specs and tests refer to these IDs, so:
 
 ## 5. Report
 
-Tell the user where the file is, its word count, how many requirements it has by priority, and list the open questions and assumptions they need to settle. Suggest `use-case` as the next step once the Must requirements look right, and `nfr` if the feature has quality targets worth pinning down.
+Tell the user where the file is, its word count, how many requirements it has by priority, and list the open questions and assumptions they need to settle. Measure the word count with `wc -w <file>` rather than estimating it: an estimate drifts, and a PRD over 600 words needs cutting before you report, not after. Suggest `use-case` as the next step once the Must requirements look right, and `nfr` if the feature has quality targets worth pinning down.
 
 ## 6. With `--print`
 
