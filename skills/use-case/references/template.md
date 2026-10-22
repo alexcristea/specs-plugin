@@ -5,18 +5,12 @@ One file per use case: `specs/<feature-slug>/use-cases/UC-<nn>-<slug>.md`. Repla
 ```markdown
 # UC-<nn>: <Goal as a short verb phrase, e.g. Invite a teammate>
 
-| Field | Value |
-|-------|-------|
-| Status | Draft |
-| Primary actor | <Workspace admin> |
-| Supporting actors | <Email service> |
-| Level | User goal |
-| Traces to | <FR-1, FR-2> |
+**Status:** Draft · **Primary actor:** <Workspace admin> · **Supporting actors:** <Email service> · **Level:** User goal · **Traces to:** <FR-1, FR-3>
 
 ## Stakeholders and interests
 
-- **<Workspace admin>**: <wants the teammate working today, without an IT ticket.>
-- **<Invitee>**: <wants to be sure the invite is genuine before clicking it.>
+- **<Workspace admin>**: <wants the teammate working today, without a support ticket.>
+- **<Invitee>**: <wants to be sure the invite is genuine before following the link.>
 
 ## Preconditions
 
@@ -28,32 +22,21 @@ One file per use case: `specs/<feature-slug>/use-cases/UC-<nn>-<slug>.md`. Repla
 
 ## Main success scenario
 
-1. <Admin> <asks to invite a person>.
-2. <System> <asks for the person's email address and role>.
-3. <Admin> <enters the email address and chooses a role>.
-4. <System> <creates a pending invitation valid for 7 days>.
-5. <System> <sends the invitation email>.
-6. <System> <shows the invitation as pending>.
+1. <Admin> <gives the person's email address>.
+2. <System> <creates a pending invitation that expires in 7 days>.
+3. <System> <sends the invitation email>.
+4. <System> <shows the invitation as pending>.
 
 ## Extensions
 
-- **3a.** <The email address is not valid>:
-  1. <System> <says what is wrong with the address>.
-  2. Resume at step 3.
-- **3b.** <The person is already a member>:
-  1. <System> <says so and does not create an invitation>.
-  2. Use case ends in failure.
-- **5a.** <The email service is unavailable>:
-  1. <System> <keeps the invitation and retries sending>.
-  2. Resume at step 6, showing the invitation as "sending".
+- **1a.** <The address is not a valid email>: <System says what is wrong>; resume at step 1.
+- **1b.** <The person is already a member>: <System says so and creates nothing>; use case fails.
+- **3a.** <The email service is unavailable>: <System keeps the invitation and retries>; resume at step 4.
 
-## Minimal guarantees
+## Guarantees
 
-- <True whatever happens. E.g. No invitation exists without a recorded inviting admin.>
-
-## Success guarantees
-
-- <True on success. E.g. A pending invitation exists and the invitee has been emailed a link to it.>
+- **Minimal:** <true whatever happens. E.g. No invitation exists without a record of the admin who sent it.>
+- **Success:** <true on success. E.g. A pending invitation exists and the invitee has been emailed a link to it.>
 
 ## Open questions
 
@@ -64,3 +47,4 @@ One file per use case: `specs/<feature-slug>/use-cases/UC-<nn>-<slug>.md`. Repla
 
 - **Level** is almost always *User goal*. Use *Summary* for a use case that strings several user-goal ones together, and *Subfunction* for a step reused by several (e.g. *Authenticate*); keep both rare.
 - Extension numbers point at the step that fails: `3a` is the first thing that can go wrong at step 3. `*a` is an extension that can happen at any step (the actor's session expires).
+- An extension that needs more than one step lists them as a nested numbered list under it; keep that for the rare case that can't be said in one line.

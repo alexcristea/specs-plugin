@@ -98,6 +98,27 @@ class PrdIsOnePage(unittest.TestCase):
         self.assertIn("FR-1", self.EXAMPLE.read_text())
 
 
+class UseCaseIsOnePage(unittest.TestCase):
+    # A use case promises to fit on one printed page; the worked example is what Claude
+    # imitates, so it has to stay inside that budget itself.
+    EXAMPLE = SKILLS / "use-case" / "references" / "example.md"
+    MAX_WORDS = 400
+
+    def test_example_fits_on_one_page(self):
+        words = len(self.EXAMPLE.read_text().split())
+        self.assertLessEqual(words, self.MAX_WORDS, f"{self.EXAMPLE.relative_to(ROOT)} has {words} words")
+
+    def test_example_main_scenario_has_three_to_nine_steps(self):
+        # Fewer steps is a single action, not a goal; more is two goals or UI detail.
+        section = re.search(r"^## Main success scenario\n(.*?)^## ", self.EXAMPLE.read_text(), re.M | re.S)
+        self.assertIsNotNone(section, "example has no ## Main success scenario section")
+        steps = re.findall(r"^\d+\. ", section.group(1), re.M)
+        self.assertTrue(3 <= len(steps) <= 9, f"main success scenario has {len(steps)} steps")
+
+    def test_example_traces_to_requirements(self):
+        self.assertIn("FR-1", self.EXAMPLE.read_text())
+
+
 class FrontmatterIsStrictYaml(unittest.TestCase):
     def test_description_is_a_folded_block_scalar(self):
         # Descriptions are long prose that gets edited during trigger tuning; a folded
