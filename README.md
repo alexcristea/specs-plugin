@@ -55,6 +55,6 @@ Every skill takes the same two optional arguments: `/specs:<skill> [path] [--pri
 
 **Gaps become questions, not guesses.** When a use case needs behavior the PRD doesn't specify, or a scenario's expected result isn't decided, the skill lists it as an open question for you instead of inventing an answer.
 
-**Quality targets are numbers.** "Fast" can't fail a check, so every NFR has a measurable target and says how it will be verified. When a target forces a design choice, record that choice as an ADR with your architecture docs and cite the `NFR-` ID as its driver; specs say what and how well, not how.
+**Quality targets are numbers, or rules a check can fail.** "Fast" can't fail a check, so every NFR has a measurable target ("95% within 2 minutes") or, for all-or-nothing targets such as access, a pass/fail rule naming who may do what ("only the owner can see who has a book"), and says how it will be verified. When a target forces a design choice, record that choice as an ADR with your architecture docs and cite the `NFR-` ID as its driver; specs say what and how well, not how.
 
 **What, not how.** Specs describe behavior an actor can observe. Steps are intentions ("admin invites Sam"), not UI clicks or database writes, so they survive a redesign.

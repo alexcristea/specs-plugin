@@ -13,7 +13,7 @@
         "NFR file written beside the PRD",
         "Exactly one file written, nothing else changed",
         "Under 400 words",
-        "Every requirement has a number to measure",
+        "Every requirement is measurable (a number, or a pass/fail rule)",
         "Every requirement says how it is verified (Scenario, Load test, Monitoring, Review)",
         "Requirements are scoped to FR- IDs",
         "Traces to row links the PRD next to it",
@@ -57,7 +57,7 @@
         "Nothing saved",
         "Reply is only the spec (starts at the title, no fence, no report)",
         "Under 400 words",
-        "Every requirement has a number to measure",
+        "Every requirement is measurable (a number, or a pass/fail rule)",
         "Every requirement says how it is verified (Scenario, Load test, Monitoring, Review)",
         "Requirements are scoped to FR- IDs",
         "No implementation detail from the README's stack"

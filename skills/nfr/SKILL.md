@@ -48,7 +48,7 @@ Use the layout in `references/template.md`, and match the length and tone of the
 
 Each requirement should be:
 
-- **Measurable**: a number, a unit and a condition. "95% of invitation emails arrive within 2 minutes", not "emails arrive quickly". A percentile beats an average, because an average hides the slow tail users remember.
+- **Measurable**: a number, a unit and a condition. "95% of invitation emails arrive within 2 minutes", not "emails arrive quickly". A percentile beats an average, because an average hides the slow tail users remember. Some targets are all-or-nothing, such as who may see or do something. For those, a rule that a check can pass or fail is the measure: "only the owner and the borrower can see who has a book", not "lending data is private". Make the rule name the actors and the action, so a scenario can try it as someone else and expect a refusal.
 - **Scoped**: name the `FR-` requirements it applies to in parentheses, so `acceptance-criteria` can tag scenarios with both IDs. Leave the scope out only when it applies to the whole feature.
 - **About the outcome, not the mechanism**: "an invitation link can't be used after it is revoked", not "store tokens in Redis with a TTL". The mechanism is an architecture decision, and naming it here takes that decision away from the people who own it.
 - **Verified somehow**: the **Verified by** column says how anyone will know, using one of:

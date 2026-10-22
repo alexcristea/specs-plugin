@@ -12,6 +12,8 @@ from grading import STACK, changed, committed, original, reported_words, run, se
 
 CASES = Path(__file__).resolve().parent / "cases.json"
 VERIFIED_BY = {"Scenario", "Load test", "Monitoring", "Review"}
+NUMBER = re.compile(r"\d|\b(one|two|three|four|five|six|seven|eight|nine|ten)\b", re.I)
+RULE = re.compile(r"\b(only|never|cannot|can't|no one|nobody|must not|every|always)\b", re.I)
 NFR_ROW = re.compile(r"^\|\s*(~~)?(NFR-\d+)\b.*$", re.M)
 
 
@@ -22,6 +24,12 @@ def rows(text):
 
 def cells(row):
     return [c.strip() for c in row.strip().strip("|").split("|")]
+
+
+def measurable(row):
+    """A number to measure against, or an all-or-nothing rule (who may or may not do what) a check can fail."""
+    requirement = re.sub(r"\bN?FR-\d+", "", " ".join(row[1:]))  # any layout: every cell but the ID
+    return bool(NUMBER.search(requirement) or RULE.search(requirement))
 
 
 def live(reqs):
@@ -36,7 +44,7 @@ def grade(case, run_dir):
     path = hits[0] if hits else None
     text = notes if case.get("print") else ((repo / path).read_text() if path else "")
     reqs, words = rows(text), len(text.split())
-    unmeasured = [i for i, r in live(reqs).items() if not re.search(r"\d", re.sub(r"\bN?FR-\d+", "", r))]
+    unmeasured = [i for i, r in live(reqs).items() if not measurable(cells(r))]
     unverified = [i for i, r in live(reqs).items() if not VERIFIED_BY & set(cells(r))]
     scoped = [i for i, r in live(reqs).items() if re.search(r"\bFR-\d", r)]
     reported = reported_words(notes)
@@ -48,7 +56,7 @@ def grade(case, run_dir):
         "Reply is only the spec (starts at the title, no fence, no report)": (
             notes.startswith("# ") and "```" not in notes, f"starts {notes[:60]!r}"),
         "Under 400 words": (text and words <= 400, f"{words} words"),
-        "Every requirement has a number to measure": (reqs and not unmeasured, f"{len(reqs)} rows; no number: {unmeasured}"),
+        "Every requirement is measurable (a number, or a pass/fail rule)": (reqs and not unmeasured, f"{len(reqs)} rows; no number: {unmeasured}"),
         "Every requirement says how it is verified (Scenario, Load test, Monitoring, Review)": (
             reqs and not unverified, f"not verified with the four values: {unverified}"),
         "Requirements are scoped to FR- IDs": (
