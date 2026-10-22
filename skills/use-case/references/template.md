@@ -11,7 +11,7 @@ One file per use case: `specs/<feature-slug>/use-cases/UC-<nn>-<slug>.md`. Repla
 | Primary actor | <Workspace admin> |
 | Supporting actors | <Email service> |
 | Level | User goal |
-| Traces to | <FR-1, FR-2, NFR-1> |
+| Traces to | <FR-1, FR-2> |
 
 ## Stakeholders and interests
 

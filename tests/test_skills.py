@@ -77,6 +77,27 @@ class Traceability(unittest.TestCase):
                     self.assertIn(prefix, text)
 
 
+class PrdIsOnePage(unittest.TestCase):
+    # The PRD promises a 1-2 minute read that prints on one page; the worked example is
+    # what Claude imitates, so it has to stay inside that budget itself.
+    EXAMPLE = SKILLS / "prd" / "references" / "example.md"
+    MAX_WORDS = 600
+
+    def test_example_fits_on_one_page(self):
+        words = len(self.EXAMPLE.read_text().split())
+        self.assertLessEqual(words, self.MAX_WORDS, f"{self.EXAMPLE.relative_to(ROOT)} has {words} words")
+
+    def test_example_summary_is_one_sentence(self):
+        # The summary carries only what is being built; the why lives in Problem, right below it.
+        section = re.search(r"^## Summary\n(.*?)^## ", self.EXAMPLE.read_text(), re.M | re.S)
+        self.assertIsNotNone(section, "example has no ## Summary section")
+        sentences = re.findall(r"[.!?](?:\s|$)", section.group(1))
+        self.assertEqual(len(sentences), 1, f"summary has {len(sentences)} sentences")
+
+    def test_example_numbers_requirements_for_downstream_specs(self):
+        self.assertIn("FR-1", self.EXAMPLE.read_text())
+
+
 class FrontmatterIsStrictYaml(unittest.TestCase):
     def test_description_is_a_folded_block_scalar(self):
         # Descriptions are long prose that gets edited during trigger tuning; a folded

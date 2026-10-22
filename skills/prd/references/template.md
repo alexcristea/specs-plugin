@@ -1,66 +1,58 @@
 # PRD template
 
-Copy this layout into `specs/<feature-slug>/prd.md`. Replace every `<…>` placeholder; delete guidance lines in parentheses.
+Copy this layout into `specs/<feature-slug>/prd.md`. Replace every `<…>` placeholder and delete the guidance in parentheses. The budget in each heading's guidance is a ceiling, not a target.
 
 ```markdown
 # <Feature name> — PRD
 
-| Status | Owner | Last updated |
-|--------|-------|--------------|
-| Draft  | <name> | <YYYY-MM-DD> |
+**Status:** Draft · **Owner:** <name> · **Last updated:** <YYYY-MM-DD>
+
+## Summary
+
+<What we are building and for whom, in one sentence. The why goes in Problem.>
 
 ## Problem
 
-<Who has what problem, and what it costs them today. Include evidence: tickets, metrics, quotes.>
+<Who cannot do what today, and what it costs them. Two to four sentences.>
 
-## Users
-
-| User | Goal |
-|------|------|
-| <Workspace admin> | <Get a new teammate working without filing an IT ticket> |
+- <Evidence: a metric, ticket count, quote or research link. One to three bullets.>
 
 ## Goals
 
-- <Outcome the feature must achieve, phrased as a change in the world, not a feature.>
+- <An outcome for users or the business, not a feature. Up to three.>
 
 ## Non-goals
 
-- <Something a reader might reasonably expect that this version will not do, and why.>
+- <Something a reader would reasonably expect that this version will not do, and why. Up to three.>
+
+## Users
+
+| User | Needs to |
+|------|----------|
+| <Workspace admin> | <Get a new teammate working without filing an IT ticket> |
 
 ## Requirements
-
-### Functional
 
 | ID   | Requirement | Priority |
 |------|-------------|----------|
 | FR-1 | <An admin can invite a person by email address.> | Must |
 | FR-2 | <An invitation expires 7 days after it is sent.> | Should |
 
-### Non-functional
-
-| ID    | Requirement | Priority |
-|-------|-------------|----------|
-| NFR-1 | <Invitation emails are sent within 60 seconds of the invite.> | Must |
-
 ## Success metrics
 
-| Metric | Today | Target | How measured |
-|--------|-------|--------|--------------|
-| <Median time from invite to first login> | <3 days> | <1 day> | <Product analytics, 30-day window> |
+| Metric | Today | Target |
+|--------|-------|--------|
+| <Median time from invite to first login> | <3 days> | <1 day> |
+| <Guardrail: support tickets about access> | <40/week> | <No increase> |
 
-## Assumptions
+## Risks and dependencies
 
-- <Something treated as true without confirmation. Each one is a risk until confirmed.>
+- <What could make this fail, or what it waits on (a team, a service, a decision). Up to three.>
 
 ## Open questions
 
 - [ ] <Question> — <who can answer it>
-
-## Change log
-
-| Date | Change |
-|------|--------|
-| <YYYY-MM-DD> | First draft. |
+- [ ] Assumed: <something treated as true without confirmation> — <who can confirm it>
 ```
 
 ## Priority (MoSCoW)

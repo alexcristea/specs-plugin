@@ -12,7 +12,7 @@ The extensions are where the value is. A main success scenario alone is the demo
 
 ## 1. Find the PRD and the existing use cases
 
-Look for the feature's PRD (`specs/<feature>/prd.md`, or wherever the repo keeps specs) and read it. Use cases trace to its `FR-` and `NFR-` IDs, so you need them.
+Look for the feature's PRD (`specs/<feature>/prd.md`, or wherever the repo keeps specs) and read it. Use cases trace to its `FR-` IDs, so you need them.
 
 If there is no PRD, say so and offer `prd` first. If the user wants use cases anyway, write them and leave the **Traces to** line as `none (no PRD yet)`, rather than inventing requirement IDs that don't exist.
 

@@ -17,8 +17,6 @@ Read the use cases in `specs/<feature>/use-cases/` (or wherever the repo keeps s
 - The **main success scenario** becomes one scenario.
 - Each **extension** (`3a`, `5a`, …) becomes at least one scenario.
 - **Success and minimal guarantees** become `Then` steps: the success guarantees on the happy path, the minimal guarantees on every failure path.
-- Measurable **non-functional requirements** (`NFR-` IDs with a number in them) become scenarios too, when they can be checked from outside the system.
-
 If there are no use cases, say so and offer `use-case` first. If the user wants criteria straight from a PRD or a plain description, write them, tag them with the `FR-` IDs you can trace, and leave out the `@UC-` tag rather than inventing one.
 
 If the repo already has `.feature` files, read a few and follow their language, tags and step phrasing, so the new steps reuse existing step definitions instead of needing new ones.
@@ -44,7 +42,7 @@ Scenario: Inviting an existing member is rejected
 ```
 
 - `@AC-<nn>.<n>` is the scenario's own ID: the use case number, then a sequence number within it. It is stable: never renumber or reuse one; a removed scenario's number stays retired.
-- `@UC-<nn>` and the `@FR-` / `@NFR-` tags are where it comes from. Test runners can filter on them (`--tags @FR-1`), which is how you answer "is FR-1 tested?".
+- `@UC-<nn>` and the `@FR-` tags are where it comes from. Test runners can filter on them (`--tags @FR-1`), which is how you answer "is FR-1 tested?".
 - Add a comment with the use case step it covers when that isn't obvious from the name: `# UC-01 extension 3b`.
 
 ## 4. Check coverage
