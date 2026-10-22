@@ -1,0 +1,117 @@
+{
+  "skill_name": "prd",
+  "evals": [
+    {
+      "id": 0,
+      "name": "explicit-folder",
+      "fixture": "explicit_folder.sh",
+      "cwd": ".",
+      "prompt": "/specs:prd product/requirements reading streaks: members get a streak for logging pages read on consecutive days, to keep people reading between meetings. Organizers tell us half the club hasn't opened the book a week before the meeting. Just draft it, I'll review.",
+      "expected_output": "A new one-page PRD at product/requirements/<streak slug>/prd.md (the named folder, created), with FR- IDs and MoSCoW priorities, a guardrail metric, guesses under Open questions as Assumed:, and none of the README's stack.",
+      "path": "^product/requirements/[a-z0-9-]*streak[a-z0-9-]*/prd\\.md$",
+      "assertions": [
+        "PRD written at the expected path",
+        "Exactly one PRD written, nothing else changed",
+        "Under 600 words",
+        "Close to the 450-word aim (under 500)",
+        "Summary is one sentence",
+        "Every requirement has an FR- ID and a MoSCoW priority",
+        "Success metrics include a guardrail",
+        "Guesses listed as Assumed: under Open questions",
+        "No implementation detail from the README's stack",
+        "Reported the path back to the user (notes.md)",
+        "Reported word count matches wc -w",
+        "Not committed"
+      ]
+    },
+    {
+      "id": 1,
+      "name": "explicit-file-update",
+      "fixture": "explicit_file_update.sh",
+      "cwd": ".",
+      "prompt": "/specs:prd docs/specs/search/prd.md add filtering search results by genre, and drop the type-ahead suggestions, the genre filter replaces them.",
+      "expected_output": "docs/specs/search/prd.md updated in place: FR-1, FR-2 and FR-4 untouched, FR-3 struck through with a reason pointing at the new requirement, the genre filter added as FR-5, Last updated bumped.",
+      "path": "^docs/specs/search/prd\\.md$",
+      "assertions": [
+        "PRD written at the expected path",
+        "Exactly one PRD written, nothing else changed",
+        "Under 600 words",
+        "FR-1, FR-2 and FR-4 unchanged",
+        "FR-3 struck through with a reason, not deleted or reused",
+        "Genre filter added as FR-5",
+        "Last updated bumped",
+        "No implementation detail from the README's stack",
+        "Reported the path back to the user (notes.md)",
+        "Reported word count matches wc -w",
+        "Not committed"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "search-finds-existing-folder",
+      "fixture": "search_existing.sh",
+      "cwd": ".",
+      "prompt": "/specs:prd meeting reminders: remind members of the next club meeting and how far through the book they should be by then. Organizers spend an evening a month chasing people on WhatsApp. Draft it, don't wait on me.",
+      "expected_output": "No path given, so the skill follows the repo's docs/specs/<feature>/ convention: a new PRD at docs/specs/<reminder slug>/prd.md, not specs/ at the root. Same one-page quality bar as any new PRD.",
+      "path": "^docs/specs/[a-z0-9-]*remind[a-z0-9-]*/prd\\.md$",
+      "assertions": [
+        "PRD written at the expected path",
+        "Exactly one PRD written, nothing else changed",
+        "Under 600 words",
+        "Close to the 450-word aim (under 500)",
+        "Summary is one sentence",
+        "Every requirement has an FR- ID and a MoSCoW priority",
+        "Success metrics include a guardrail",
+        "Guesses listed as Assumed: under Open questions",
+        "No implementation detail from the README's stack",
+        "Reported the path back to the user (notes.md)",
+        "Reported word count matches wc -w",
+        "Not committed"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "fallback-to-root-from-subfolder",
+      "fixture": "monorepo_subfolder.sh",
+      "cwd": "packages/web",
+      "prompt": "/specs:prd book swaps: members lend their physical copies of books to each other within the club. Today people coordinate in a group chat and books go missing. Go ahead and draft it.",
+      "expected_output": "No path and no existing specs, and Claude starts in packages/web: the PRD goes to specs/<swap slug>/prd.md at the repo root, not packages/web/specs/. Same one-page quality bar as any new PRD.",
+      "path": "^specs/[a-z0-9-]*swap[a-z0-9-]*/prd\\.md$",
+      "assertions": [
+        "PRD written at the expected path",
+        "Exactly one PRD written, nothing else changed",
+        "Under 600 words",
+        "Close to the 450-word aim (under 500)",
+        "Summary is one sentence",
+        "Every requirement has an FR- ID and a MoSCoW priority",
+        "Success metrics include a guardrail",
+        "Guesses listed as Assumed: under Open questions",
+        "No implementation detail from the README's stack",
+        "Reported the path back to the user (notes.md)",
+        "Reported word count matches wc -w",
+        "Not committed"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "print-only",
+      "fixture": "explicit_folder.sh",
+      "cwd": ".",
+      "print": true,
+      "prompt": "/specs:prd --print reading streaks: members get a streak for logging pages read on consecutive days, to keep people reading between meetings. Organizers tell us half the club hasn't opened the book a week before the meeting.",
+      "expected_output": "Nothing written to the repo; the reply is the PRD alone, starting at its # title with no preamble, report or code fence, at the same one-page quality bar, with guesses as Assumed: since nobody can answer questions.",
+      "path": "^$",
+      "assertions": [
+        "Nothing saved",
+        "Reply is only the PRD (starts at the title, no fence, no report)",
+        "Under 600 words",
+        "Close to the 450-word aim (under 500)",
+        "Summary is one sentence",
+        "Every requirement has an FR- ID and a MoSCoW priority",
+        "Success metrics include a guardrail",
+        "Guesses listed as Assumed: under Open questions",
+        "No implementation detail from the README's stack"
+      ]
+    }
+  ]
+}
