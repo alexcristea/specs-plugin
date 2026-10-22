@@ -6,7 +6,7 @@
 | Primary actor | Workspace admin |
 | Supporting actors | Email service |
 | Level | User goal |
-| Traces to | FR-1, FR-3 |
+| Traces to | FR-1, FR-3 ([PRD](../prd.md#requirements)) |
 
 ## Stakeholders and interests
 

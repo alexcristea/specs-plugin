@@ -14,7 +14,7 @@ The extensions are where the value is. A main success scenario alone is the demo
 
 Look for the feature's PRD (`specs/<feature>/prd.md`, or wherever the repo keeps specs) and read it. Use cases trace to its `FR-` IDs, so you need them.
 
-If there is no PRD, say so and offer `prd` first. If the user wants use cases anyway, write them and leave the **Traces to** row as `none (no PRD yet)`, rather than inventing requirement IDs that don't exist.
+If there is no PRD, say so and offer `prd` first. If the user wants use cases anyway, write them and leave the **Traces to** row as `none (no PRD yet)`, with no link, rather than inventing requirement IDs that don't exist.
 
 Read existing files in `specs/<feature>/use-cases/` too: you may be adding to them or updating them, and numbering continues from the highest existing `UC-` number.
 
@@ -38,7 +38,7 @@ Use the layout in `references/template.md`, one file per use case: `specs/<featu
 - **Each step is one action by one party**: the actor does something, or the system does something. "Admin submits and system sends the email" is two steps.
 - **Every step that can fail gets an extension**, numbered after the step (`3a`, `3b`). Ask of each step: what if the input is invalid, the actor isn't allowed, something already exists, an external system is down, or the actor stops halfway? Each extension says how it ends: rejoining the main scenario at a step, or the use case failing.
 - **Guarantees** are what is true when it ends. *Minimal guarantees* hold even on failure (no partial invite is left behind); *success guarantees* hold on success. These become the `Then` clauses of the acceptance criteria.
-- **Trace** each use case to the requirement IDs it satisfies. If a step needs behavior the PRD doesn't mention, don't quietly invent a requirement: list it under **Open questions** in the use case and tell the user, since it may belong in the PRD.
+- **Trace** each use case to the requirement IDs it satisfies, written as plain text, followed by one relative link to the PRD: `FR-1, FR-3 ([PRD](../prd.md#requirements))`. Don't link each ID: the PRD's requirement rows have no anchors, and plain IDs match the `@FR-` tags when someone searches for `FR-1`. If a step needs behavior the PRD doesn't mention, don't quietly invent a requirement: list it under **Open questions** in the use case and tell the user, since it may belong in the PRD.
 
 ## 4. Check coverage
 

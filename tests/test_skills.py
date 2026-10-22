@@ -178,6 +178,22 @@ class HeaderFieldsAreATable(unittest.TestCase):
                 self.assertRegex(path.read_text(), self.TITLE_THEN_TABLE)
 
 
+class UseCaseLinksToPrd(unittest.TestCase):
+    # One relative link in the header lets a reader in GitHub or a PR diff find the PRD;
+    # the FR- IDs stay plain text so a search for FR-1 matches every layer the same way.
+    FILES = [SKILLS / "use-case" / "references" / name for name in ("template.md", "example.md")]
+    TRACES_ROW = re.compile(r"^\| Traces to \| (.*) \|$", re.M)
+    PRD_LINK = "([PRD](../prd.md#requirements))"
+
+    def test_traces_row_ends_with_a_prd_link(self):
+        for path in self.FILES:
+            with self.subTest(file=str(path.relative_to(SKILLS))):
+                row = self.TRACES_ROW.search(path.read_text())
+                self.assertIsNotNone(row, "no | Traces to | row")
+                self.assertTrue(row.group(1).endswith(self.PRD_LINK), f"row is {row.group(1)!r}")
+                self.assertNotRegex(row.group(1), r"\[FR-", "FR- IDs should stay plain text")
+
+
 class FrontmatterIsStrictYaml(unittest.TestCase):
     def test_description_is_a_folded_block_scalar(self):
         # Descriptions are long prose that gets edited during trigger tuning; a folded
