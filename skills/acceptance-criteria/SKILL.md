@@ -1,7 +1,8 @@
 ---
 name: acceptance-criteria
 description: >-
-  Write acceptance criteria as Gherkin scenarios (Given / When / Then) for a feature or use case, one scenario per main path and per extension, each tagged with a stable ID (AC-01.1) and traced to its use case (UC-01) and requirements (FR-1), saved as specs/<feature>/acceptance/UC-01-<slug>.feature so they can drive BDD or end-to-end tests. Use this skill whenever the user wants acceptance criteria, Gherkin, BDD scenarios, a definition of done, or says things like "how do we know this feature works", "write the ACs for X", "turn these use cases into test scenarios", or "what should QA check". Also use it to update scenarios after a use case changes. Not for writing the test code or step definitions themselves, unit tests, PRDs or use cases.
+  Write acceptance criteria as Gherkin scenarios (Given / When / Then) for a feature or use case, one scenario per main path and per extension, each tagged with a stable ID (AC-01.1) and traced to its use case (UC-01) and requirements (FR-1), saved as specs/<feature>/acceptance/UC-01-<slug>.feature so they can drive BDD or end-to-end tests. Use this skill whenever the user wants acceptance criteria, Gherkin, BDD scenarios, a definition of done, or says things like "how do we know this feature works", "write the ACs for X", "turn these use cases into test scenarios", or "what should QA check". Also use it to update scenarios after a use case changes. Not for writing the test code or step definitions themselves, unit tests, PRDs or use cases. Takes an optional path, and --print to return the scenarios without saving them.
+argument-hint: "[path] [--print]"
 ---
 
 # Acceptance criteria
@@ -10,9 +11,21 @@ Your job is to turn use cases into scenarios precise enough that the user, a tes
 
 A good scenario fails for exactly one reason. If a scenario can't fail, or could fail for five reasons, it isn't telling anyone anything.
 
+Arguments: `$ARGUMENTS`
+
+- **A path**: the first word, if it contains a `/`, ends in `.md` or `.feature`, or exists. It says what to read and where the scenarios go (§1).
+- **`--print`**, anywhere: return the scenarios instead of saving them, for a tool or script that only needs the text (§6).
+- Anything else describes the feature or the use cases to cover.
+
 ## 1. Find the source
 
-Read the use cases in `specs/<feature>/use-cases/` (or wherever the repo keeps specs) and the PRD they trace to. Scenarios come from use cases:
+Feature files go in an `acceptance/` folder beside the feature's `use-cases/`. Take the first match, in this order:
+
+1. **A path in the arguments.** A `.feature` file is the file to write or update. A use case `.md` is the one source to cover, and its feature file is `../acceptance/<same name>.feature`. A `prd.md` means its whole folder is the feature. An `acceptance/` folder is where the files go. A folder that holds `use-cases/`, `acceptance/` or a `prd.md` is that feature's folder. Any other folder is where feature folders go: `<folder>/<feature-slug>/acceptance/`. Create what doesn't exist yet: the user named the place on purpose.
+2. **The feature's specs in the repo.** Look for them (`git ls-files | grep -iE '(^|/)prd\.md$|/use-cases/|\.feature$'`) and write beside them.
+3. **`specs/` at the project root**: `$(git rev-parse --show-toplevel)/specs/<feature-slug>/acceptance/`, or the working directory outside a git repo. The root, not the folder you were started in, because the other specs skills look there.
+
+Read the feature's use cases and the PRD they trace to. Scenarios come from use cases:
 
 - The **main success scenario** becomes one scenario.
 - Each **extension** (`3a`, `5a`, …) becomes at least one scenario.
@@ -57,3 +70,11 @@ Compare the scenarios with their source and report:
 ## 5. Report
 
 Tell the user which files you wrote, how many scenarios each has, and the coverage gaps and open questions from §4. Writing step definitions or test code is a separate task; offer it rather than starting it.
+
+## 6. With `--print`
+
+A tool or a script reads your reply, not a person, so:
+
+- **Save nothing.** Work out the paths as in §1 anyway and read what is there: an existing `.feature` file is still updated with its `AC-` IDs kept (§3).
+- **Ask nothing.** Nobody is there to answer. Scenarios whose expected result isn't decided still stay out; put each as a `# Open question: …` comment at the end of its feature file instead of in a report.
+- **Reply with the feature files and nothing else**: no preamble, no report, no code fence around them, so the caller can save the output as it is. With more than one, put `# file: <path>` on the line above each, naming the file it would be saved to, so the caller can split them.

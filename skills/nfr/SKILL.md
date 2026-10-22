@@ -1,7 +1,8 @@
 ---
 name: nfr
 description: >-
-  Write or update one-page non-functional requirements (NFRs) for a feature or product: quality targets for performance, availability, security, privacy, accessibility, usability and compliance, each with a stable ID (NFR-1), a measurable target, how it is verified and the requirements (FR-1) it applies to, saved as specs/<feature>/nfr.md. Use this skill whenever the user wants NFRs, quality attributes, quality requirements, performance or availability targets, or says things like "how fast does this need to be", "what are the security requirements for X", "what uptime do we need", "does this need to be accessible", or "add the non-functionals", even if they never say "NFR". Also use it to review whether existing quality requirements are measurable. Not for functional requirements or PRDs, architecture decisions or ADRs, SLO dashboards or alert config, load-test scripts, use cases or acceptance criteria.
+  Write or update one-page non-functional requirements (NFRs) for a feature or product: quality targets for performance, availability, security, privacy, accessibility, usability and compliance, each with a stable ID (NFR-1), a measurable target, how it is verified and the requirements (FR-1) it applies to, saved as specs/<feature>/nfr.md. Use this skill whenever the user wants NFRs, quality attributes, quality requirements, performance or availability targets, or says things like "how fast does this need to be", "what are the security requirements for X", "what uptime do we need", "does this need to be accessible", or "add the non-functionals", even if they never say "NFR". Also use it to review whether existing quality requirements are measurable. Not for functional requirements or PRDs, architecture decisions or ADRs, SLO dashboards or alert config, load-test scripts, use cases or acceptance criteria. Takes an optional path, and --print to return the NFRs without saving them.
+argument-hint: "[path] [--print]"
 ---
 
 # Non-functional requirements
@@ -10,11 +11,23 @@ Your job is to say **how well** the feature has to work, in numbers someone can 
 
 An NFR without a number can't fail. "The page is fast" passes every review and every release; "95% of searches return in under 300 ms" can be measured, argued about and tested. Turning the adjective into a number is most of the work.
 
+Arguments: `$ARGUMENTS`
+
+- **A path**: the first word, if it contains a `/`, ends in `.md`, or exists. It says where the NFRs go (§1).
+- **`--print`**, anywhere: return the NFRs instead of saving them, for a tool or script that only needs the text (§6).
+- Anything else describes the feature.
+
 ## 1. Find the PRD and existing NFRs
 
-Read the feature's PRD (`specs/<feature>/prd.md`, or wherever the repo keeps specs): NFRs apply to its `FR-` requirements, and its success metrics and risks often hint at quality targets. If there is no PRD, say so and offer `prd` first; if the user wants NFRs anyway, write them and leave the **Traces to** row as `none (no PRD yet)`, with no link.
+`nfr.md` sits beside the feature's `prd.md`. Take the first match, in this order:
 
-If `specs/<feature>/nfr.md` exists, you are updating it: read it and keep its IDs (see §4). Look for product-wide quality targets too (a `specs/platform/nfr.md`, an SLO doc, a security policy, an accessibility statement). Reference those rather than copying them, so a target changes in one place.
+1. **A path in the arguments.** A `prd.md` is the PRD to read, and `nfr.md` goes next to it. Any other `.md` file is the NFR file itself. A folder that holds a `prd.md` or `nfr.md` is that feature's folder. Any other folder is where feature folders go: `<folder>/<feature-slug>/nfr.md`. Create what doesn't exist yet: the user named the place on purpose.
+2. **The feature's PRD in the repo.** Look for it (`git ls-files | grep -iE '(^|/)(prd|nfr)\.md$'`) and write beside it. With no PRD for this feature, follow where the repo keeps other specs.
+3. **`specs/` at the project root**: `$(git rev-parse --show-toplevel)/specs/<feature-slug>/nfr.md`, or the working directory outside a git repo. The root, not the folder you were started in, because the other specs skills look there.
+
+Read the feature's PRD: NFRs apply to its `FR-` requirements, and its success metrics and risks often hint at quality targets. If there is no PRD, say so and offer `prd` first; if the user wants NFRs anyway, write them and leave the **Traces to** row as `none (no PRD yet)`, with no link.
+
+If the feature's `nfr.md` exists, you are updating it: read it and keep its IDs (see §4). Look for product-wide quality targets too (a `specs/platform/nfr.md`, an SLO doc, a security policy, an accessibility statement). Reference those rather than copying them, so a target changes in one place.
 
 ## 2. Find the qualities that matter
 
@@ -61,3 +74,12 @@ Tell the user where the file is, its word count, how many requirements it has by
 
 - `acceptance-criteria` for the `Scenario` rows: each becomes a scenario in the `.feature` file of the use case (`UC-`) whose path it checks, with its own `AC-` ID and an `@NFR-` tag beside the `@FR-` one.
 - An architecture decision record for any target that forces a design choice (a latency target that rules out a synchronous call, a residency rule that picks a region), citing the `NFR-` IDs as its drivers. Offer it rather than writing it; ADRs belong with the architecture docs, not in `specs/`.
+
+## 6. With `--print`
+
+A tool or a script reads your reply, not a person, so:
+
+- **Save nothing.** Work out the path as in §1 anyway and read what is there: an existing `nfr.md` is still updated with its IDs kept (§4), and you return the updated text.
+- **Ask nothing.** Nobody is there to answer. Propose the numbers and list each guess under **Open questions** as `Assumed: …`.
+- **Count without saving**: `wc -w <<'EOF'` with the NFRs as the heredoc, and cut if it is over 400.
+- **Reply with the NFRs and nothing else**: no preamble, no report, no code fence around them, so the caller can save the output as it is.

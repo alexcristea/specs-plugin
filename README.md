@@ -38,7 +38,14 @@ specs/<feature>/
     └── UC-01-invite-a-teammate.feature   # @AC-01.1 @UC-01 @FR-1
 ```
 
-If the repo already keeps specs somewhere else (`docs/specs/`, existing `.feature` files), the skills follow that instead.
+If the repo already keeps specs somewhere else (`docs/specs/`, existing `.feature` files), the skills follow that instead. `specs/` is created at the repo root, even when Claude starts in a subfolder.
+
+## Arguments
+
+Every skill takes the same two optional arguments: `/specs:<skill> [path] [--print]`.
+
+- **`path`** says where the spec goes or what it builds on. A spec file is updated in place (`/specs:prd docs/specs/search/prd.md add a genre filter`). An input file points at its feature (`/specs:use-case docs/specs/search/prd.md` writes `docs/specs/search/use-cases/`). Any other folder holds feature folders (`/specs:prd docs/product team invites` writes `docs/product/team-invites/prd.md`). Without a path, the skill searches the repo, then falls back to `specs/` at the root.
+- **`--print`** returns the spec as the reply and saves nothing, for tools and scripts that only need the text: `claude -p "/specs:prd --print team invites" > prd.md`. The skill doesn't ask questions in this mode, so its guesses show up as `Assumed:` open questions. When several files come back, each starts with a marker naming its path (`<!-- file: … -->`, or `# file: …` in `.feature` files).
 
 ## What the skills follow
 

@@ -1,7 +1,8 @@
 ---
 name: prd
 description: >-
-  Write or update a one-page product requirements document (PRD) for a feature or product: a one-sentence summary, the problem and its evidence, goals and non-goals, who it is for, numbered functional requirements (FR-1), success metrics with a guardrail, risks and open questions, saved as specs/<feature>/prd.md. Use this skill whenever the user wants a PRD, a product spec, a requirements doc, or says things like "spec out this feature", "write the requirements for X", "turn this idea into a PRD", "what should v1 of this do", or wants to capture a product idea before building it, even if they never say "PRD". Also use it to revise, review or tighten an existing PRD. Not for non-functional requirements, technical design docs, RFCs, architecture decisions, use cases or acceptance criteria.
+  Write or update a one-page product requirements document (PRD) for a feature or product: a one-sentence summary, the problem and its evidence, goals and non-goals, who it is for, numbered functional requirements (FR-1), success metrics with a guardrail, risks and open questions, saved as specs/<feature>/prd.md. Use this skill whenever the user wants a PRD, a product spec, a requirements doc, or says things like "spec out this feature", "write the requirements for X", "turn this idea into a PRD", "what should v1 of this do", or wants to capture a product idea before building it, even if they never say "PRD". Also use it to revise, review or tighten an existing PRD. Not for non-functional requirements, technical design docs, RFCs, architecture decisions, use cases or acceptance criteria. Takes an optional path, and --print to return the PRD without saving it.
+argument-hint: "[path] [--print]"
 ---
 
 # Product requirements document
@@ -10,9 +11,21 @@ Your job is to turn a product idea into a PRD that the rest of the specs (use ca
 
 The numbered requirements are the point. `use-case` traces each use case to `FR-` IDs, and `acceptance-criteria` traces each scenario through a `UC-` ID to an `AC-` ID, so a requirement without an ID can't be tested and a renumbered one breaks every link downstream.
 
-## 1. Find where specs live
+Arguments: `$ARGUMENTS`
 
-Look for an existing specs folder before creating one: `specs/`, `docs/specs/`, `docs/prd/`, or whatever an existing PRD in the repo uses. Follow what is there. With nothing to follow, write to `specs/<feature-slug>/prd.md`, where the slug is short and kebab-case (`team-invites`, not `the-new-team-invitation-flow`).
+- **A path**: the first word, if it contains a `/`, ends in `.md`, or exists. It says where the PRD goes (§1).
+- **`--print`**, anywhere: return the PRD instead of saving it, for a tool or script that only needs the text (§6).
+- Anything else describes the feature.
+
+## 1. Find where the PRD goes
+
+Take the first match, in this order:
+
+1. **A path in the arguments.** A `.md` file is the PRD itself. A folder that holds a `prd.md` is that feature's folder. Any other folder is where feature folders go, so the PRD is `<folder>/<feature-slug>/prd.md`. Create what doesn't exist yet: the user named the place on purpose.
+2. **Where the repo already keeps specs.** Look for an existing PRD or specs folder (`git ls-files | grep -iE '(^|/)(specs?|prds?)/|prd\.md$'`) and follow it: `docs/specs/billing/prd.md` means a new feature goes in `docs/specs/<feature-slug>/prd.md`. If you find more than one convention, pick the one beside the most PRDs and say which you chose.
+3. **`specs/` at the project root**: `$(git rev-parse --show-toplevel)/specs/<feature-slug>/prd.md`, or the working directory outside a git repo. The root, not the folder you were started in, because the other specs skills look there and a PRD in `packages/web/specs/` is one nobody finds.
+
+The slug is short and kebab-case (`team-invites`, not `the-new-team-invitation-flow`).
 
 If a PRD for this feature already exists, you are updating it, not starting over: read it first and keep its IDs (see §4).
 
@@ -61,3 +74,12 @@ Other specs and tests refer to these IDs, so:
 ## 5. Report
 
 Tell the user where the file is, its word count, how many requirements it has by priority, and list the open questions and assumptions they need to settle. Suggest `use-case` as the next step once the Must requirements look right, and `nfr` if the feature has quality targets worth pinning down.
+
+## 6. With `--print`
+
+A tool or a script reads your reply, not a person, so:
+
+- **Save nothing.** Work out the path as in §1 anyway and read what is there: an existing PRD is still updated with its IDs kept (§4), and you return the updated text.
+- **Ask nothing.** Nobody is there to answer. Write the draft and list each guess under **Open questions** as `Assumed: …`.
+- **Count without saving**: `wc -w <<'EOF'` with the PRD as the heredoc, and cut if it is over 600.
+- **Reply with the PRD and nothing else**: no preamble, no report, no code fence around it, so the caller can save the output as it is.

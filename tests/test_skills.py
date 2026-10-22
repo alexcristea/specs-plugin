@@ -98,6 +98,34 @@ class PrdIsOnePage(unittest.TestCase):
         self.assertIn("FR-1", self.EXAMPLE.read_text())
 
 
+class SkillsTakeArguments(unittest.TestCase):
+    # Every skill takes the same arguments: `<path>` says where the spec goes (without it the
+    # skill searches the repo, then falls back to specs/ at the project root), and `--print`
+    # returns the spec instead of saving it. The hint and the body must agree.
+    HINT = 'argument-hint: "[path] [--print]"'
+
+    def test_argument_hint_names_the_path_and_print(self):
+        for path in skill_files():
+            with self.subTest(skill=path.parent.name):
+                self.assertIn(self.HINT, frontmatter(path))
+
+    def test_body_reads_the_arguments(self):
+        for path in skill_files():
+            with self.subTest(skill=path.parent.name):
+                self.assertIn("$ARGUMENTS", path.read_text())
+
+    def test_fallback_is_the_project_root(self):
+        # From a subfolder of a monorepo, a relative specs/ would land in the wrong place.
+        for path in skill_files():
+            with self.subTest(skill=path.parent.name):
+                self.assertIn("git rev-parse --show-toplevel", path.read_text())
+
+    def test_print_mode_is_described(self):
+        for path in skill_files():
+            with self.subTest(skill=path.parent.name):
+                self.assertIn("**`--print`", path.read_text())
+
+
 class UseCaseIsOnePage(unittest.TestCase):
     # A use case promises to fit on one printed page; the worked example is what Claude
     # imitates, so it has to stay inside that budget itself.
