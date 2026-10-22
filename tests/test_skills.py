@@ -119,6 +119,18 @@ class UseCaseIsOnePage(unittest.TestCase):
         self.assertIn("FR-1", self.EXAMPLE.read_text())
 
 
+class HeaderFieldsAreATable(unittest.TestCase):
+    # Status, owner, actors and traces sit in a table under the title, so they scan at a glance.
+    FILES = [SKILLS / skill / "references" / name
+             for skill in ("prd", "use-case") for name in ("template.md", "example.md")]
+    TITLE_THEN_TABLE = re.compile(r"^# .*\n\n\| Field \| Value \|\n\|-+\|-+\|\n", re.M)
+
+    def test_title_is_followed_by_a_field_table(self):
+        for path in self.FILES:
+            with self.subTest(file=str(path.relative_to(SKILLS))):
+                self.assertRegex(path.read_text(), self.TITLE_THEN_TABLE)
+
+
 class FrontmatterIsStrictYaml(unittest.TestCase):
     def test_description_is_a_folded_block_scalar(self):
         # Descriptions are long prose that gets edited during trigger tuning; a folded

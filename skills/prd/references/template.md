@@ -5,7 +5,11 @@ Copy this layout into `specs/<feature-slug>/prd.md`. Replace every `<…>` place
 ```markdown
 # <Feature name> — PRD
 
-**Status:** Draft · **Owner:** <name> · **Last updated:** <YYYY-MM-DD>
+| Field | Value |
+|-------|-------|
+| Status | Draft |
+| Owner | <name> |
+| Last updated | <YYYY-MM-DD> |
 
 ## Summary
 

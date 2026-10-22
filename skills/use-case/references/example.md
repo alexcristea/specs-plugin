@@ -1,6 +1,12 @@
 # UC-01: Invite a teammate
 
-**Status:** Draft · **Primary actor:** Workspace admin · **Supporting actors:** Email service · **Level:** User goal · **Traces to:** FR-1, FR-3
+| Field | Value |
+|-------|-------|
+| Status | Draft |
+| Primary actor | Workspace admin |
+| Supporting actors | Email service |
+| Level | User goal |
+| Traces to | FR-1, FR-3 |
 
 ## Stakeholders and interests
 

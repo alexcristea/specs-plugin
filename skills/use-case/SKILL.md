@@ -14,7 +14,7 @@ The extensions are where the value is. A main success scenario alone is the demo
 
 Look for the feature's PRD (`specs/<feature>/prd.md`, or wherever the repo keeps specs) and read it. Use cases trace to its `FR-` IDs, so you need them.
 
-If there is no PRD, say so and offer `prd` first. If the user wants use cases anyway, write them and leave the **Traces to** line as `none (no PRD yet)`, rather than inventing requirement IDs that don't exist.
+If there is no PRD, say so and offer `prd` first. If the user wants use cases anyway, write them and leave the **Traces to** row as `none (no PRD yet)`, rather than inventing requirement IDs that don't exist.
 
 Read existing files in `specs/<feature>/use-cases/` too: you may be adding to them or updating them, and numbering continues from the highest existing `UC-` number.
 

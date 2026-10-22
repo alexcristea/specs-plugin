@@ -1,6 +1,10 @@
 # Team invites — PRD
 
-**Status:** Draft · **Owner:** Dana Lee · **Last updated:** 2026-10-22
+| Field | Value |
+|-------|-------|
+| Status | Draft |
+| Owner | Dana Lee |
+| Last updated | 2026-10-22 |
 
 ## Summary
 
