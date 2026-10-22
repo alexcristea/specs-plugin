@@ -55,6 +55,7 @@ Scenario: Inviting an existing member is rejected
 ```
 
 - `@AC-<nn>.<n>` is the scenario's own ID: the use case number, then a sequence number within it. It is stable: never renumber or reuse one; a removed scenario's number stays retired.
+- **When updating, leave existing scenarios as they are.** Add new scenarios for what is missing, and change an existing one only when the use case step it covers has changed, telling the user which one and why. A scenario that already passes is a promise the code keeps; an extra `Then` quietly moves the bar for every test run that relies on it. If you think an existing scenario is too weak, say so in the report instead.
 - `@UC-<nn>` and the `@FR-` tags are where it comes from. Test runners can filter on them (`--tags @FR-1`), which is how you answer "is FR-1 tested?".
 - Add an `@NFR-` tag when the scenario checks a quality target from `specs/<feature>/nfr.md` marked **Verified by** `Scenario` (a revoked link stops working within 1 minute). Put such a scenario in the file of the use case whose path it exercises.
 - Add a comment with the use case step it covers when that isn't obvious from the name: `# UC-01 extension 3b`.
