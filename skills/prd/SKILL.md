@@ -1,7 +1,7 @@
 ---
 name: prd
 description: >-
-  Write or update a one-page product requirements document (PRD) for a feature or product: a one-sentence summary, the problem and its evidence, goals and non-goals, who it is for, numbered functional requirements (FR-1), success metrics with a guardrail, risks and open questions, saved as specs/<feature>/prd.md. Use this skill whenever the user wants a PRD, a product spec, a requirements doc, or says things like "spec out this feature", "write the requirements for X", "turn this idea into a PRD", "what should v1 of this do", or wants to capture a product idea before building it, even if they never say "PRD". Also use it to revise, review or tighten an existing PRD. Not for technical design docs, RFCs, architecture decisions, use cases or acceptance criteria.
+  Write or update a one-page product requirements document (PRD) for a feature or product: a one-sentence summary, the problem and its evidence, goals and non-goals, who it is for, numbered functional requirements (FR-1), success metrics with a guardrail, risks and open questions, saved as specs/<feature>/prd.md. Use this skill whenever the user wants a PRD, a product spec, a requirements doc, or says things like "spec out this feature", "write the requirements for X", "turn this idea into a PRD", "what should v1 of this do", or wants to capture a product idea before building it, even if they never say "PRD". Also use it to revise, review or tighten an existing PRD. Not for non-functional requirements, technical design docs, RFCs, architecture decisions, use cases or acceptance criteria.
 ---
 
 # Product requirements document
@@ -48,7 +48,7 @@ Requirements are where PRDs usually go wrong. Each one should be:
 - **About behavior, not implementation**: "invites expire after 7 days", not "store `expires_at` in Postgres".
 - **Prioritized** with MoSCoW (Must / Should / Could / Won't), so scope can be cut deliberately.
 
-Requirements are numbered `FR-1`, `FR-2`, … and are all functional: something a user can do or observe.
+Requirements are numbered `FR-1`, `FR-2`, … and are all functional: something a user can do or observe. Quality targets (how fast, how available, how secure) are non-functional and go in `specs/<feature>/nfr.md` as `NFR-` requirements, written by the `nfr` skill; if the user raises one, note it under **Open questions** and offer `nfr` rather than adding it to the table.
 
 ## 4. Keep IDs stable when updating
 
@@ -60,4 +60,4 @@ Other specs and tests refer to these IDs, so:
 
 ## 5. Report
 
-Tell the user where the file is, its word count, how many requirements it has by priority, and list the open questions and assumptions they need to settle. Suggest `use-case` as the next step once the Must requirements look right.
+Tell the user where the file is, its word count, how many requirements it has by priority, and list the open questions and assumptions they need to settle. Suggest `use-case` as the next step once the Must requirements look right, and `nfr` if the feature has quality targets worth pinning down.

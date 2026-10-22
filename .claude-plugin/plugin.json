@@ -1,7 +1,7 @@
 {
   "name": "specs",
   "version": "0.1.0",
-  "description": "Specs-driven development: write the product specs before the code. prd: a product requirements document with numbered requirements. use-case: fully dressed use cases traced to those requirements. acceptance-criteria: Gherkin scenarios traced to the use cases, ready to drive tests.",
+  "description": "Specs-driven development: write the product specs before the code. prd: a product requirements document with numbered requirements. nfr: measurable quality targets for those requirements. use-case: fully dressed use cases traced to those requirements. acceptance-criteria: Gherkin scenarios traced to the use cases, ready to drive tests.",
   "author": {
     "name": "Alex Cristea",
     "email": "alexcristea@me.com"
@@ -9,5 +9,5 @@
   "homepage": "https://github.com/alexcristea/specs-plugin",
   "repository": "https://github.com/alexcristea/specs-plugin",
   "license": "MIT",
-  "keywords": ["specs-driven-development", "prd", "requirements", "use-cases", "acceptance-criteria", "gherkin", "bdd"]
+  "keywords": ["specs-driven-development", "prd", "requirements", "non-functional-requirements", "use-cases", "acceptance-criteria", "gherkin", "bdd"]
 }

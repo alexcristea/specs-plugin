@@ -43,6 +43,7 @@ Scenario: Inviting an existing member is rejected
 
 - `@AC-<nn>.<n>` is the scenario's own ID: the use case number, then a sequence number within it. It is stable: never renumber or reuse one; a removed scenario's number stays retired.
 - `@UC-<nn>` and the `@FR-` tags are where it comes from. Test runners can filter on them (`--tags @FR-1`), which is how you answer "is FR-1 tested?".
+- Add an `@NFR-` tag when the scenario checks a quality target from `specs/<feature>/nfr.md` marked **Verified by** `Scenario` (a revoked link stops working within 1 minute). Put such a scenario in the file of the use case whose path it exercises.
 - Add a comment with the use case step it covers when that isn't obvious from the name: `# UC-01 extension 3b`.
 
 ## 4. Check coverage
@@ -50,7 +51,7 @@ Scenario: Inviting an existing member is rejected
 Compare the scenarios with their source and report:
 
 - Use case extensions with no scenario.
-- `Must` requirements with no scenario tagged for them.
+- `Must` requirements with no scenario tagged for them, including `NFR-` requirements verified by `Scenario`.
 - Scenarios whose expected result the use case or PRD doesn't specify. Don't settle these by guessing: list them as open questions, since the answer is a product decision.
 
 ## 5. Report

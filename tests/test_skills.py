@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parent.parent
 SKILLS = ROOT / "skills"
 MANIFEST = ROOT / ".claude-plugin" / "plugin.json"
 
-EXPECTED_SKILLS = {"prd", "use-case", "acceptance-criteria"}
+EXPECTED_SKILLS = {"prd", "nfr", "use-case", "acceptance-criteria"}
 
 # A plain (unquoted) YAML scalar may not contain ": " or " #", nor end with ":".
 # Claude Code tolerates these, but GitHub and other strict parsers reject the whole frontmatter.
@@ -21,7 +21,7 @@ PLAIN_SCALAR_BREAKERS = re.compile(r": | #|:$")
 REFERENCE_PATH = re.compile(r"`(references/[\w./-]+)`")
 
 # The skills hand off to each other through these IDs, so every skill has to spell them the same way.
-TRACE_IDS = {"FR-", "UC-", "AC-"}
+TRACE_IDS = {"FR-", "NFR-", "UC-", "AC-"}
 
 
 def frontmatter(path):
@@ -169,7 +169,7 @@ class AcceptanceCriteriaExample(unittest.TestCase):
 class HeaderFieldsAreATable(unittest.TestCase):
     # Status, owner, actors and traces sit in a table under the title, so they scan at a glance.
     FILES = [SKILLS / skill / "references" / name
-             for skill in ("prd", "use-case") for name in ("template.md", "example.md")]
+             for skill in ("prd", "nfr", "use-case") for name in ("template.md", "example.md")]
     TITLE_THEN_TABLE = re.compile(r"^# .*\n\n\| Field \| Value \|\n\|-+\|-+\|\n", re.M)
 
     def test_title_is_followed_by_a_field_table(self):
@@ -192,6 +192,49 @@ class UseCaseLinksToPrd(unittest.TestCase):
                 self.assertIsNotNone(row, "no | Traces to | row")
                 self.assertTrue(row.group(1).endswith(self.PRD_LINK), f"row is {row.group(1)!r}")
                 self.assertNotRegex(row.group(1), r"\[FR-", "FR- IDs should stay plain text")
+
+
+class NfrExample(unittest.TestCase):
+    # The worked example is what Claude imitates, and it continues the PRD example, so every
+    # row has to model the rules: a stable ID, a number someone can measure, and a way to verify it.
+    EXAMPLE = SKILLS / "nfr" / "references" / "example.md"
+    TEMPLATE = SKILLS / "nfr" / "references" / "template.md"
+    MAX_WORDS = 400
+    ROW = re.compile(r"^\| (NFR-\d+) \| ([^|]+) \| ([^|]+) \| ([^|]+) \| ([^|]+) \|$", re.M)
+    VERIFIED_BY = {"Scenario", "Load test", "Monitoring", "Review"}
+
+    def rows(self):
+        rows = self.ROW.findall(self.EXAMPLE.read_text())
+        self.assertTrue(rows, "example has no NFR- rows")
+        return [[cell.strip() for cell in row] for row in rows]
+
+    def test_example_fits_on_one_page(self):
+        words = len(self.EXAMPLE.read_text().split())
+        self.assertLessEqual(words, self.MAX_WORDS, f"{self.EXAMPLE.relative_to(ROOT)} has {words} words")
+
+    def test_every_requirement_has_a_measurable_target(self):
+        # "Fast" and "secure" can't fail a check; a number with a unit can.
+        for nfr, _, requirement, _, _ in self.rows():
+            with self.subTest(nfr=nfr):
+                self.assertRegex(requirement, r"\d", "requirement has no number to measure against")
+
+    def test_every_requirement_says_how_it_is_verified(self):
+        for nfr, _, _, verified_by, _ in self.rows():
+            with self.subTest(nfr=nfr):
+                self.assertIn(verified_by, self.VERIFIED_BY)
+
+    def test_ids_are_unique(self):
+        ids = [row[0] for row in self.rows()]
+        self.assertEqual(len(ids), len(set(ids)), f"duplicate NFR IDs: {ids}")
+
+    def test_scoped_requirements_trace_to_the_prd(self):
+        self.assertTrue(any("FR-" in row[2] for row in self.rows()), "no requirement names the FR- it applies to")
+
+    def test_traces_row_links_to_the_prd_next_to_it(self):
+        # nfr.md sits beside prd.md in specs/<feature>/, so the link has no ../
+        for path in (self.EXAMPLE, self.TEMPLATE):
+            with self.subTest(file=path.name):
+                self.assertRegex(path.read_text(), r"(?m)^\| Traces to \| .*\(\[PRD\]\(prd\.md#requirements\)\) \|$")
 
 
 class FrontmatterIsStrictYaml(unittest.TestCase):
