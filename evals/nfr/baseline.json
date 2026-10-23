@@ -1,0 +1,15 @@
+{
+  "skill": "nfr",
+  "behavior": {
+    "skill_sha": "cd9d9ed",
+    "model": "claude-opus-5-5",
+    "date": "2026-10-23",
+    "evals": 3,
+    "runs_per_configuration": 1,
+    "pass_rate": {
+      "with_skill": 1.0,
+      "without_skill": 0.607
+    },
+    "note": "update-keeps-ids barely discriminates: without the skill only NFR-2 fails, deleted instead of struck through. beside-prd and print do: without the skill the NFRs run to 693-778 words, copy the README's stack, use no fixed Verified by values and wrap --print output in a preamble."
+  }
+}

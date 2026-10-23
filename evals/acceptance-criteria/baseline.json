@@ -1,0 +1,15 @@
+{
+  "skill": "acceptance-criteria",
+  "behavior": {
+    "skill_sha": "cd9d9ed",
+    "model": "claude-opus-5-5",
+    "date": "2026-10-23",
+    "evals": 3,
+    "runs_per_configuration": 1,
+    "pass_rate": {
+      "with_skill": 1.0,
+      "without_skill": 0.513
+    },
+    "note": "update-keeps-ids does not discriminate in this run (8/8 both); before 5ce1626 the skill itself failed it by editing existing scenarios. Without the skill, from-use-case-path writes Markdown in acceptance-criteria/ instead of a .feature file, and print-with-nfr adds a preamble, leaves out AC IDs and the @NFR-3 tag, and has a scenario with two Whens."
+  }
+}
