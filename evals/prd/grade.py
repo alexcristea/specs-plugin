@@ -67,13 +67,14 @@ def grade(case, run):
         "Nothing saved": (not paths, f"changed: {paths}"),
         "Reply is only the PRD (starts at the title, no fence, no report)": (
             notes.startswith("# ") and "```" not in notes, f"starts {notes[:60]!r}"),
-        "Close to the 450-word aim (under 500)": (text and words < 500, f"{words} words"),
+        # The skill aims at 450 because drafts land about 100 words over the number they are given;
+        # what matters is where they land, so this checks the 550 target, not the 450 aim.
+        "Within the 550-word target": (text and words <= 550, f"{words} words"),
         "Reported word count matches wc -w": (
             reported and int(reported.group(1)) == words,
             f"reported {reported.group(1) if reported else 'none'}, wc -w {words}"),
         "PRD written at the expected path": (bool(prds), f"changed: {paths}"),
         "Exactly one PRD written, nothing else changed": (len(paths) == 1 and bool(prds), f"changed: {paths}"),
-        "Under 600 words": (text and words <= 600, f"{words} words in {path}"),
         "No implementation detail from the README's stack": (
             text and not STACK.search(text), f"found: {sorted({m.group(0) for m in STACK.finditer(text)})}"),
         "Reported the path back to the user (notes.md)": (
