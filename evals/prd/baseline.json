@@ -5,11 +5,11 @@
     "model": "claude-opus-5-5",
     "date": "2026-10-23",
     "evals": 6,
-    "runs_per_configuration": 1,
+    "runs_per_configuration": 3,
     "pass_rate": {
       "with_skill": 1.0,
-      "without_skill": 0.405
+      "without_skill": 0.4
     },
-    "note": "Every eval discriminates. Without the skill: a flat product/requirements/reading-streaks.md instead of a feature folder, docs/specs/ instead of the root specs/ from a monorepo subfolder, a v2/search/ folder from the feature name, FR-3 deleted instead of struck through, a preamble around --print output, no FR- table, and 616-893 words."
+    "note": "Every eval discriminates, and every with-skill run passes all checks. Without the skill (stable across 3 runs): a flat product/requirements/reading-streaks.md instead of a feature folder, docs/ instead of the root specs/ from a monorepo subfolder, a v2/search/ folder from the feature name, FR-3 deleted instead of struck through, a preamble around --print output, no FR- table, and more than 550 words."
   }
 }
