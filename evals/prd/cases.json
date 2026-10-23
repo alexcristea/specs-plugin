@@ -6,7 +6,7 @@
       "name": "explicit-folder",
       "fixture": "explicit_folder.sh",
       "cwd": ".",
-      "prompt": "/specs:prd product/requirements reading streaks: members get a streak for logging pages read on consecutive days, to keep people reading between meetings. Organizers tell us half the club hasn't opened the book a week before the meeting. Just draft it, I'll review.",
+      "prompt": "/specs:prd --path product/requirements reading streaks: members get a streak for logging pages read on consecutive days, to keep people reading between meetings. Organizers tell us half the club hasn't opened the book a week before the meeting. Just draft it, I'll review.",
       "expected_output": "A new one-page PRD at product/requirements/<streak slug>/prd.md (the named folder, created), with FR- IDs and MoSCoW priorities, a guardrail metric, guesses under Open questions as Assumed:, and none of the README's stack.",
       "path": "^product/requirements/[a-z0-9-]*streak[a-z0-9-]*/prd\\.md$",
       "assertions": [
@@ -29,7 +29,7 @@
       "name": "explicit-file-update",
       "fixture": "explicit_file_update.sh",
       "cwd": ".",
-      "prompt": "/specs:prd docs/specs/search/prd.md add filtering search results by genre, and drop the type-ahead suggestions, the genre filter replaces them.",
+      "prompt": "/specs:prd --path docs/specs/search/prd.md add filtering search results by genre, and drop the type-ahead suggestions, the genre filter replaces them.",
       "expected_output": "docs/specs/search/prd.md updated in place: FR-1, FR-2 and FR-4 untouched, FR-3 struck through with a reason pointing at the new requirement, the genre filter added as FR-5, Last updated bumped.",
       "path": "^docs/specs/search/prd\\.md$",
       "assertions": [
@@ -111,6 +111,29 @@
         "Success metrics include a guardrail",
         "Guesses listed as Assumed: under Open questions",
         "No implementation detail from the README's stack"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "slash-in-feature-name",
+      "fixture": "explicit_folder.sh",
+      "cwd": ".",
+      "prompt": "/specs:prd v2/search: members search the catalog by title, author and genre at once, instead of the title-only search in v1. Draft it, I'll review.",
+      "expected_output": "No --path, so 'v2/search' is the feature, not a folder: the PRD goes to specs/<search slug>/prd.md at the repo root, and no v2/ folder is created.",
+      "path": "^specs/[a-z0-9-]*search[a-z0-9-]*/prd\\.md$",
+      "assertions": [
+        "PRD written at the expected path",
+        "Exactly one PRD written, nothing else changed",
+        "Under 600 words",
+        "Close to the 450-word aim (under 500)",
+        "Summary is one sentence",
+        "Every requirement has an FR- ID and a MoSCoW priority",
+        "Success metrics include a guardrail",
+        "Guesses listed as Assumed: under Open questions",
+        "No implementation detail from the README's stack",
+        "Reported the path back to the user (notes.md)",
+        "Reported word count matches wc -w",
+        "Not committed"
       ]
     }
   ]

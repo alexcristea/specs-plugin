@@ -44,7 +44,7 @@ def section(text, title):
 
 
 def reported_words(notes):
-    m = re.search(r"(\d{2,4})[ -]words?", notes)
+    m = re.search(r"word count\W{0,6}(\d{2,4})", notes, re.I) or re.search(r"(\d{2,4}) words\b", notes)
     return int(m.group(1)) if m else None
 
 

@@ -6,7 +6,7 @@
       "name": "from-use-case-path",
       "fixture": "from_use_case.sh",
       "cwd": ".",
-      "prompt": "/specs:acceptance-criteria docs/specs/book-swaps/use-cases/UC-01-borrow-a-book.md",
+      "prompt": "/specs:acceptance-criteria --path docs/specs/book-swaps/use-cases/UC-01-borrow-a-book.md",
       "expected_output": "docs/specs/book-swaps/acceptance/UC-01-borrow-a-book.feature: one scenario for the main path and at least one per extension (1a, 3a, 3b), each with exactly one unique @AC-01.n tag, @UC-01 and an @FR- tag, one When, declarative steps.",
       "path": "^docs/specs/book-swaps/acceptance/UC-01-borrow-a-book.feature$",
       "assertions": [
@@ -26,7 +26,7 @@
       "name": "update-keeps-ids",
       "fixture": "update.sh",
       "cwd": ".",
-      "prompt": "/specs:acceptance-criteria docs/specs/book-swaps/acceptance/UC-01-borrow-a-book.feature cover what's missing from the use case",
+      "prompt": "/specs:acceptance-criteria --path docs/specs/book-swaps/acceptance/UC-01-borrow-a-book.feature cover what's missing from the use case",
       "expected_output": "Feature file updated in place: AC-01.1..3 scenarios unchanged, a new AC-01.4 scenario covering extension 3b (no answer in 7 days), nothing renumbered.",
       "path": "^docs/specs/book-swaps/acceptance/UC-01-borrow-a-book.feature$",
       "assertions": [
@@ -46,7 +46,7 @@
       "fixture": "with_nfr.sh",
       "cwd": ".",
       "print": true,
-      "prompt": "/specs:acceptance-criteria --print docs/specs/book-swaps/use-cases/UC-01-borrow-a-book.md",
+      "prompt": "/specs:acceptance-criteria --print --path docs/specs/book-swaps/use-cases/UC-01-borrow-a-book.md",
       "expected_output": "Nothing written; the reply is the feature file alone (no preamble, report or fence), and the privacy target NFR-3 (verified by Scenario) is checked by a scenario tagged @NFR-3.",
       "path": "^$",
       "assertions": [

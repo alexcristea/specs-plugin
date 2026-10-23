@@ -6,7 +6,7 @@
       "name": "from-prd-path",
       "fixture": "from_prd.sh",
       "cwd": ".",
-      "prompt": "/specs:use-case docs/specs/book-swaps/prd.md write the use cases. I'm away, go ahead without me.",
+      "prompt": "/specs:use-case --path docs/specs/book-swaps/prd.md write the use cases. I'm away, go ahead without me.",
       "expected_output": "Two or more use case files in docs/specs/book-swaps/use-cases/UC-nn-<slug>.md, each under 400 words with 3-9 intention-level steps, extensions, and a Traces to row of plain FR- IDs plus one PRD link; every Must and Should requirement covered.",
       "path": "^docs/specs/book-swaps/use-cases/UC-\\d\\d-[a-z0-9-]+\\.md$",
       "assertions": [
@@ -48,7 +48,7 @@
       "fixture": "from_prd.sh",
       "cwd": ".",
       "print": true,
-      "prompt": "/specs:use-case --print docs/specs/book-swaps/prd.md",
+      "prompt": "/specs:use-case --print --path docs/specs/book-swaps/prd.md",
       "expected_output": "Nothing written; the reply is two or more use cases, each preceded by a <!-- file: <path> --> marker, with no preamble, report or code fence.",
       "path": "^$",
       "assertions": [

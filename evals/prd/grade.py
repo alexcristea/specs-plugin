@@ -60,7 +60,8 @@ def grade(case, run):
         text = (repo / path).read_text() if path and (repo / path).exists() else ""
     reqs = rows(text)
     words = len(text.split())
-    reported = re.search(r"(\d{3,4})[ -]words?", notes)
+    # "Word count: 497" first; else "497 words" (a space, so "the 600-word ceiling" is not a count)
+    reported = re.search(r"word count\W{0,6}(\d{2,4})", notes, re.I) or re.search(r"(\d{2,4}) words\b", notes)
 
     checks = {
         "Nothing saved": (not paths, f"changed: {paths}"),
