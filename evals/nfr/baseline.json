@@ -7,9 +7,9 @@
     "evals": 3,
     "runs_per_configuration": 3,
     "pass_rate": {
-      "with_skill": 0.984,
+      "with_skill": 1.0,
       "without_skill": 0.607
     },
-    "note": "The one with-skill miss (print, 1 of 3 runs) is a grader limit: 'the book shows its borrower until the owner marks it returned, including after a server restart' is a pass/fail rule the RULE word list does not recognise. update-keeps-ids barely discriminates: without the skill only NFR-2 fails, deleted instead of struck through, in all 3 runs. Without the skill the NFRs run past 400 words, copy the README's stack and use no fixed Verified by values."
+    "note": "update-keeps-ids barely discriminates: without the skill only NFR-2 fails, deleted instead of struck through, in all 3 runs. beside-prd and print do: without the skill the NFRs run past 400 words, copy the README's stack, use no fixed Verified by values and wrap --print output in a preamble."
   }
 }

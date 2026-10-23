@@ -13,7 +13,8 @@ from grading import STACK, changed, committed, original, reported_words, run, se
 CASES = Path(__file__).resolve().parent / "cases.json"
 VERIFIED_BY = {"Scenario", "Load test", "Monitoring", "Review"}
 NUMBER = re.compile(r"\d|\b(zero|none|one|two|three|four|five|six|seven|eight|nine|ten)\b", re.I)
-RULE = re.compile(r"\b(only|never|cannot|can't|no one|nobody|must not|every|always)\b", re.I)
+# all-or-nothing wording: who may act, or a state that holds until an event, even through a failure
+RULE = re.compile(r"\b(only|never|cannot|can't|no one|nobody|must not|every|always|until|including after)\b", re.I)
 NFR_ROW = re.compile(r"^\|\s*(~~)?(NFR-\d+)\b.*$", re.M)
 
 
