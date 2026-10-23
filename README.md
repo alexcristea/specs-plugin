@@ -42,9 +42,9 @@ If the repo already keeps specs somewhere else (`docs/specs/`, existing `.featur
 
 ## Arguments
 
-Every skill takes the same two optional arguments: `/specs:<skill> [path] [--print]`.
+Every skill takes the same two optional flags: `/specs:<skill> [--path <path>] [--print]`. Everything else you type describes the feature.
 
-- **`path`** says where the spec goes or what it builds on. A spec file is updated in place (`/specs:prd docs/specs/search/prd.md add a genre filter`). An input file points at its feature (`/specs:use-case docs/specs/search/prd.md` writes `docs/specs/search/use-cases/`). Any other folder holds feature folders (`/specs:prd docs/product team invites` writes `docs/product/team-invites/prd.md`). Without a path, the skill searches the repo, then falls back to `specs/` at the root.
+- **`--path <path>`** says where the spec goes or what it builds on. A spec file is updated in place (`/specs:prd --path docs/specs/search/prd.md add a genre filter`). An input file points at its feature (`/specs:use-case --path docs/specs/search/prd.md` writes `docs/specs/search/use-cases/`). Any other folder holds feature folders (`/specs:prd --path docs/product team invites` writes `docs/product/team-invites/prd.md`). Without `--path`, the skill searches the repo, then falls back to `specs/` at the root.
 - **`--print`** returns the spec as the reply and saves nothing, for tools and scripts that only need the text: `claude -p "/specs:prd --print team invites" > prd.md`. The skill doesn't ask questions in this mode, so its guesses show up as `Assumed:` open questions. When several files come back, each starts with a marker naming its path (`<!-- file: … -->`, or `# file: …` in `.feature` files).
 
 ## What the skills follow

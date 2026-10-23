@@ -1,8 +1,8 @@
 ---
 name: prd
 description: >-
-  Write or update a one-page product requirements document (PRD) for a feature or product: a one-sentence summary, the problem and its evidence, goals and non-goals, who it is for, numbered functional requirements (FR-1), success metrics with a guardrail, risks and open questions, saved as specs/<feature>/prd.md. Use this skill whenever the user wants a PRD, a product spec, a requirements doc, or says things like "spec out this feature", "write the requirements for X", "turn this idea into a PRD", "what should v1 of this do", or wants to capture a product idea before building it, even if they never say "PRD". Also use it to revise, review or tighten an existing PRD. Not for non-functional requirements, technical design docs, RFCs, architecture decisions, use cases or acceptance criteria. Takes an optional path, and --print to return the PRD without saving it.
-argument-hint: "[path] [--print]"
+  Write or update a one-page product requirements document (PRD) for a feature or product: a one-sentence summary, the problem and its evidence, goals and non-goals, who it is for, numbered functional requirements (FR-1), success metrics with a guardrail, risks and open questions, saved as specs/<feature>/prd.md. Use this skill whenever the user wants a PRD, a product spec, a requirements doc, or says things like "spec out this feature", "write the requirements for X", "turn this idea into a PRD", "what should v1 of this do", or wants to capture a product idea before building it, even if they never say "PRD". Also use it to revise, review or tighten an existing PRD. Not for non-functional requirements, technical design docs, RFCs, architecture decisions, use cases or acceptance criteria. Takes --path to say where the PRD goes, and --print to return the PRD without saving it.
+argument-hint: "[--path <path>] [--print]"
 ---
 
 # Product requirements document
@@ -13,15 +13,15 @@ The numbered requirements are the point. `use-case` traces each use case to `FR-
 
 Arguments: `$ARGUMENTS`
 
-- **A path**: the first word, if it contains a `/`, ends in `.md`, or exists. It says where the PRD goes (§1).
-- **`--print`**, anywhere: return the PRD instead of saving it, for a tool or script that only needs the text (§6).
-- Anything else describes the feature.
+- **`--path <path>`**: where the PRD goes (§1).
+- **`--print`**: return the PRD instead of saving it, for a tool or script that only needs the text (§6).
+- Everything else describes the feature, even when it contains a `/` (`v2/search` is a feature name, not a path).
 
 ## 1. Find where the PRD goes
 
 Take the first match, in this order:
 
-1. **A path in the arguments.** A `.md` file is the PRD itself. A folder that holds a `prd.md` is that feature's folder. Any other folder is where feature folders go, so the PRD is `<folder>/<feature-slug>/prd.md`. Create what doesn't exist yet: the user named the place on purpose.
+1. **`--path`.** A `.md` file is the PRD itself. A folder that holds a `prd.md` is that feature's folder. Any other folder is where feature folders go, so the PRD is `<folder>/<feature-slug>/prd.md`. Create what doesn't exist yet: the user named the place on purpose.
 2. **Where the repo already keeps specs.** Look for an existing PRD or specs folder (`git ls-files | grep -iE '(^|/)(specs?|prds?)/|prd\.md$'`) and follow it: `docs/specs/billing/prd.md` means a new feature goes in `docs/specs/<feature-slug>/prd.md`. If you find more than one convention, pick the one beside the most PRDs and say which you chose.
 3. **`specs/` at the project root**: `$(git rev-parse --show-toplevel)/specs/<feature-slug>/prd.md`, or the working directory outside a git repo. The root, not the folder you were started in, because the other specs skills look there and a PRD in `packages/web/specs/` is one nobody finds.
 

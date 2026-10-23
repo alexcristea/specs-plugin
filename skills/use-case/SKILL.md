@@ -1,8 +1,8 @@
 ---
 name: use-case
 description: >-
-  Write one-page fully dressed use cases (Cockburn style) for a feature: primary actor, goal, preconditions, guarantees, a numbered main success scenario and extensions for every step that can fail, each traced to the PRD requirements (FR-1) it covers, saved as specs/<feature>/use-cases/UC-01-<slug>.md. Use this skill whenever the user wants use cases, user flows written as steps, actor goals, or says things like "write the use cases for X", "what are the scenarios for this feature", "walk through how a user does Y", "break the PRD into use cases", or "what can go wrong when a user does Z". Also use it to update use cases after the PRD changes. Not for user stories in a backlog tool, UML diagrams, PRDs or Gherkin acceptance criteria. Takes an optional path, and --print to return the use cases without saving them.
-argument-hint: "[path] [--print]"
+  Write one-page fully dressed use cases (Cockburn style) for a feature: primary actor, goal, preconditions, guarantees, a numbered main success scenario and extensions for every step that can fail, each traced to the PRD requirements (FR-1) it covers, saved as specs/<feature>/use-cases/UC-01-<slug>.md. Use this skill whenever the user wants use cases, user flows written as steps, actor goals, or says things like "write the use cases for X", "what are the scenarios for this feature", "walk through how a user does Y", "break the PRD into use cases", or "what can go wrong when a user does Z". Also use it to update use cases after the PRD changes. Not for user stories in a backlog tool, UML diagrams, PRDs or Gherkin acceptance criteria. Takes --path to say where the use cases go, and --print to return the use cases without saving them.
+argument-hint: "[--path <path>] [--print]"
 ---
 
 # Use cases
@@ -13,15 +13,15 @@ The extensions are where the value is. A main success scenario alone is the demo
 
 Arguments: `$ARGUMENTS`
 
-- **A path**: the first word, if it contains a `/`, ends in `.md`, or exists. It says where the use cases go (§1).
-- **`--print`**, anywhere: return the use cases instead of saving them, for a tool or script that only needs the text (§7).
-- Anything else describes the feature or the goals to cover.
+- **`--path <path>`**: where the use cases go (§1).
+- **`--print`**: return the use cases instead of saving them, for a tool or script that only needs the text (§7).
+- Everything else describes the feature or the goals to cover, even when it contains a `/` (`v2/search` is a feature name, not a path).
 
 ## 1. Find the PRD and the existing use cases
 
 Use cases go in a `use-cases/` folder beside the feature's `prd.md`. Take the first match, in this order:
 
-1. **A path in the arguments.** A `prd.md` is the PRD to read, and the use cases go in `use-cases/` next to it. Any other `.md` file is a use case to write or update, and the PRD is `../prd.md` from it. A `use-cases/` folder is where the files go. A folder that holds a `prd.md` or `use-cases/` is that feature's folder. Any other folder is where feature folders go: `<folder>/<feature-slug>/use-cases/`. Create what doesn't exist yet: the user named the place on purpose.
+1. **`--path`.** A `prd.md` is the PRD to read, and the use cases go in `use-cases/` next to it. Any other `.md` file is a use case to write or update, and the PRD is `../prd.md` from it. A `use-cases/` folder is where the files go. A folder that holds a `prd.md` or `use-cases/` is that feature's folder. Any other folder is where feature folders go: `<folder>/<feature-slug>/use-cases/`. Create what doesn't exist yet: the user named the place on purpose.
 2. **The feature's PRD in the repo.** Look for it (`git ls-files | grep -iE '(^|/)prd\.md$|/use-cases/'`) and write beside it. With no PRD for this feature, follow where the repo keeps other specs.
 3. **`specs/` at the project root**: `$(git rev-parse --show-toplevel)/specs/<feature-slug>/use-cases/`, or the working directory outside a git repo. The root, not the folder you were started in, because the other specs skills look there.
 

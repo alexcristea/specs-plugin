@@ -1,8 +1,8 @@
 ---
 name: nfr
 description: >-
-  Write or update one-page non-functional requirements (NFRs) for a feature or product: quality targets for performance, availability, security, privacy, accessibility, usability and compliance, each with a stable ID (NFR-1), a measurable target, how it is verified and the requirements (FR-1) it applies to, saved as specs/<feature>/nfr.md. Use this skill whenever the user wants NFRs, quality attributes, quality requirements, performance or availability targets, or says things like "how fast does this need to be", "what are the security requirements for X", "what uptime do we need", "does this need to be accessible", or "add the non-functionals", even if they never say "NFR". Also use it to review whether existing quality requirements are measurable. Not for functional requirements or PRDs, architecture decisions or ADRs, SLO dashboards or alert config, load-test scripts, use cases or acceptance criteria. Takes an optional path, and --print to return the NFRs without saving them.
-argument-hint: "[path] [--print]"
+  Write or update one-page non-functional requirements (NFRs) for a feature or product: quality targets for performance, availability, security, privacy, accessibility, usability and compliance, each with a stable ID (NFR-1), a measurable target, how it is verified and the requirements (FR-1) it applies to, saved as specs/<feature>/nfr.md. Use this skill whenever the user wants NFRs, quality attributes, quality requirements, performance or availability targets, or says things like "how fast does this need to be", "what are the security requirements for X", "what uptime do we need", "does this need to be accessible", or "add the non-functionals", even if they never say "NFR". Also use it to review whether existing quality requirements are measurable. Not for functional requirements or PRDs, architecture decisions or ADRs, SLO dashboards or alert config, load-test scripts, use cases or acceptance criteria. Takes --path to say where the NFRs go, and --print to return the NFRs without saving them.
+argument-hint: "[--path <path>] [--print]"
 ---
 
 # Non-functional requirements
@@ -13,15 +13,15 @@ An NFR without a number can't fail. "The page is fast" passes every review and e
 
 Arguments: `$ARGUMENTS`
 
-- **A path**: the first word, if it contains a `/`, ends in `.md`, or exists. It says where the NFRs go (§1).
-- **`--print`**, anywhere: return the NFRs instead of saving them, for a tool or script that only needs the text (§6).
-- Anything else describes the feature.
+- **`--path <path>`**: where the NFRs go (§1).
+- **`--print`**: return the NFRs instead of saving them, for a tool or script that only needs the text (§6).
+- Everything else describes the feature, even when it contains a `/` (`v2/search` is a feature name, not a path).
 
 ## 1. Find the PRD and existing NFRs
 
 `nfr.md` sits beside the feature's `prd.md`. Take the first match, in this order:
 
-1. **A path in the arguments.** A `prd.md` is the PRD to read, and `nfr.md` goes next to it. Any other `.md` file is the NFR file itself. A folder that holds a `prd.md` or `nfr.md` is that feature's folder. Any other folder is where feature folders go: `<folder>/<feature-slug>/nfr.md`. Create what doesn't exist yet: the user named the place on purpose.
+1. **`--path`.** A `prd.md` is the PRD to read, and `nfr.md` goes next to it. Any other `.md` file is the NFR file itself. A folder that holds a `prd.md` or `nfr.md` is that feature's folder. Any other folder is where feature folders go: `<folder>/<feature-slug>/nfr.md`. Create what doesn't exist yet: the user named the place on purpose.
 2. **The feature's PRD in the repo.** Look for it (`git ls-files | grep -iE '(^|/)(prd|nfr)\.md$'`) and write beside it. With no PRD for this feature, follow where the repo keeps other specs.
 3. **`specs/` at the project root**: `$(git rev-parse --show-toplevel)/specs/<feature-slug>/nfr.md`, or the working directory outside a git repo. The root, not the folder you were started in, because the other specs skills look there.
 

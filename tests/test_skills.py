@@ -110,10 +110,10 @@ class PrdIsOnePage(unittest.TestCase):
 
 
 class SkillsTakeArguments(unittest.TestCase):
-    # Every skill takes the same arguments: `<path>` says where the spec goes (without it the
-    # skill searches the repo, then falls back to specs/ at the project root), and `--print`
+    # Every skill takes the same arguments: `--path <path>` says where the spec goes (without it
+    # the skill searches the repo, then falls back to specs/ at the project root), and `--print`
     # returns the spec instead of saving it. The hint and the body must agree.
-    HINT = 'argument-hint: "[path] [--print]"'
+    HINT = 'argument-hint: "[--path <path>] [--print]"'
 
     def test_argument_hint_names_the_path_and_print(self):
         for path in skill_files():
@@ -135,6 +135,14 @@ class SkillsTakeArguments(unittest.TestCase):
         for path in skill_files():
             with self.subTest(skill=path.parent.name):
                 self.assertIn("**`--print`", path.read_text())
+
+    def test_path_is_a_flag_not_a_guess(self):
+        # Guessing whether the first word is a path misreads feature names like "v2/search".
+        for path in skill_files():
+            with self.subTest(skill=path.parent.name):
+                text = path.read_text()
+                self.assertIn("**`--path <path>`**", text)
+                self.assertNotIn("the first word", text)
 
 
 class WordCountsAreMeasured(unittest.TestCase):
