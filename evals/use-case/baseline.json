@@ -11,5 +11,13 @@
       "without_skill": 0.31
     },
     "note": "Identical across 3 runs in both configurations. Without the skill: one 1,000+ word use-cases.md beside the PRD, docs/use-cases/ instead of the root specs/ from a monorepo subfolder, no 3-9 step main scenario or PRD link in Traces to, and --print output with a preamble and no file markers."
+  },
+  "triggers": {
+    "skill_sha": "cd9d9ed",
+    "model": "claude-opus-5-5",
+    "date": "2026-10-23",
+    "passed": 20,
+    "total": 20,
+    "note": "2 runs per query, --num-workers 1. Every should-trigger query triggered and no near miss did."
   }
 }

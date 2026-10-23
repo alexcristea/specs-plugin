@@ -1,0 +1,22 @@
+[
+  {"query": "how do we know team invites works? write the acceptance criteria for UC-01 in specs/team-invites/use-cases", "should_trigger": true},
+  {"query": "turn these use cases into Gherkin scenarios we can run with cucumber", "should_trigger": true},
+  {"query": "write the ACs for the password reset flow as given/when/then", "should_trigger": true},
+  {"query": "what should QA check for the refund flow? i want scenarios tagged so we can see which requirements are covered", "should_trigger": true},
+  {"query": "use case UC-03 gained extension 4b, update its feature file without renumbering anything", "should_trigger": true},
+  {"query": "BDD scenarios for checkout coupon codes: valid, expired, already used, wrong currency", "should_trigger": true},
+  {"query": "definition of done for the export feature, as executable scenarios", "should_trigger": true},
+  {"query": "write acceptance criteria for FR-2 and FR-3 straight from specs/search/prd.md, there are no use cases yet", "should_trigger": true},
+  {"query": "which use case extensions in specs/booking don't have a scenario yet? fill the gaps in the .feature files", "should_trigger": true},
+  {"query": "add a scenario that checks NFR-3 (revoked links stop working within a minute) to the invite feature file", "should_trigger": true},
+  {"query": "write the step definitions for features/invite.feature in TypeScript with playwright-bdd", "should_trigger": false},
+  {"query": "write jest unit tests for the coupon validator in src/checkout/coupon.ts", "should_trigger": false},
+  {"query": "our cucumber run fails with 'Undefined step: the admin invites \"sam@example.com\"'. fix it", "should_trigger": false},
+  {"query": "write the use case for applying a coupon at checkout, with extensions", "should_trigger": false},
+  {"query": "write a PRD for coupon codes at checkout", "should_trigger": false},
+  {"query": "set up cucumber-js in this repo with a GitHub Actions job that runs it on every PR", "should_trigger": false},
+  {"query": "turn our cucumber JSON output into an HTML test report", "should_trigger": false},
+  {"query": "write a release test plan: regression areas, environments, sign-off owners", "should_trigger": false},
+  {"query": "review the PR that changes tests/checkout and tell me if anything looks off", "should_trigger": false},
+  {"query": "how fast do coupon checks need to be? write the performance targets", "should_trigger": false}
+]

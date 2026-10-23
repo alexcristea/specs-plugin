@@ -1,0 +1,22 @@
+[
+  {"query": "spec out team invites for our B2B dashboard. admins should be able to invite teammates by email, and i want something the eng lead can review before anyone starts building", "should_trigger": true},
+  {"query": "can you write a PRD for a dark mode toggle in our iOS app? support gets ~40 tickets a month asking for it and product wants it in Q3", "should_trigger": true},
+  {"query": "we keep getting asked for CSV export of invoices. turn it into a proper requirements doc with numbered requirements so QA can trace tests back to them", "should_trigger": true},
+  {"query": "what should v1 of the referral program do? users get a credit when a friend signs up. help me pin down the scope and what's explicitly out", "should_trigger": true},
+  {"query": "review specs/checkout/prd.md and tighten it. it's 1200 words and half the requirements say things like 'checkout should be fast and easy'", "should_trigger": true},
+  {"query": "I have rough notes from a customer call in notes/acme-call.md, they want passwordless magic-link login. draft the product spec from them", "should_trigger": true},
+  {"query": "turn this idea into a PRD: a 'quiet hours' setting so notifications don't buzz between 10pm and 7am", "should_trigger": true},
+  {"query": "before anyone writes code for bulk archive in the inbox, write down what it needs to do, who it's for and how we'll know it worked", "should_trigger": true},
+  {"query": "add a requirement to docs/specs/search/prd.md for filtering by date range, and drop the search suggestions one, we cut it last sprint", "should_trigger": true},
+  {"query": "need a product requirements doc for the new onboarding checklist: problem, goals, non-goals, success metrics, the usual", "should_trigger": true},
+  {"query": "write a technical design doc for moving our job queue from Redis to SQS, with sequence diagrams and a rollout plan", "should_trigger": false},
+  {"query": "draft an RFC proposing we move our public API from REST to GraphQL, with alternatives considered", "should_trigger": false},
+  {"query": "record an ADR: we picked Postgres over DynamoDB for the orders service because of the reporting queries", "should_trigger": false},
+  {"query": "how fast does the search endpoint need to be? write down the latency and availability targets for specs/search", "should_trigger": false},
+  {"query": "break specs/team-invites/prd.md into fully dressed use cases with extensions", "should_trigger": false},
+  {"query": "write Gherkin acceptance criteria for UC-02 in specs/team-invites/use-cases", "should_trigger": false},
+  {"query": "write user stories for the invites epic in Jira format, as a / I want / so that, with story points", "should_trigger": false},
+  {"query": "summarize docs/specs/search/prd.md in three bullets for the exec weekly update", "should_trigger": false},
+  {"query": "update the README to explain how to install the CLI with homebrew", "should_trigger": false},
+  {"query": "convert docs/specs/billing/prd.md to a PDF so I can attach it to an email to the client", "should_trigger": false}
+]

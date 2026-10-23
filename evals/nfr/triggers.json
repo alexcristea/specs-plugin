@@ -1,0 +1,22 @@
+[
+  {"query": "how fast does search need to be? we have specs/search/prd.md, pin down the latency and uptime targets before we design it", "should_trigger": true},
+  {"query": "what are the security requirements for the password reset flow in specs/password-reset/prd.md?", "should_trigger": true},
+  {"query": "add the non-functionals for team invites: how quickly the email arrives, link expiry and guessing, accessibility", "should_trigger": true},
+  {"query": "does our checkout need to be accessible? we sell to UK public sector buyers. write it down as a requirement with a WCAG level", "should_trigger": true},
+  {"query": "what uptime do we need for the booking API? our contracts promise 99.9 but nobody ever wrote it into the spec", "should_trigger": true},
+  {"query": "review specs/billing/nfr.md, half of the rows say 'should be fast' or 'secure'. make them measurable", "should_trigger": true},
+  {"query": "we need data residency and retention rules for the EU customer export feature, the GDPR stuff, written next to its PRD", "should_trigger": true},
+  {"query": "quality attributes for mobile sync: offline behavior, how long until a change shows on other devices, battery impact", "should_trigger": true},
+  {"query": "in docs/specs/invites/nfr.md tighten invite email delivery to 1 minute instead of 5, and drop the availability one, the platform target covers it", "should_trigger": true},
+  {"query": "list the performance and privacy requirements the recommendations feature has to meet, and how we'd verify each one", "should_trigger": true},
+  {"query": "write a k6 load test script that hits /api/search at 200 rps for 10 minutes and fails if p95 is over 300ms", "should_trigger": false},
+  {"query": "set up a Grafana SLO dashboard and an alert for p95 latency on the checkout service", "should_trigger": false},
+  {"query": "write an ADR for choosing a CDN, the driver is our NFR-3 latency target for image loads", "should_trigger": false},
+  {"query": "spec out the referral program for v1: goals, non-goals, numbered functional requirements", "should_trigger": false},
+  {"query": "turn NFR-3 into a Gherkin scenario in features/invite.feature tagged with the NFR id", "should_trigger": false},
+  {"query": "why is /search slow? p95 went from 200ms to 1.4s after yesterday's deploy", "should_trigger": false},
+  {"query": "configure the nginx rate limiter to 100 requests per minute per IP on the login route", "should_trigger": false},
+  {"query": "run a lighthouse accessibility audit on the signup page and fix the contrast issues it finds", "should_trigger": false},
+  {"query": "write unit tests for the password strength validator in src/auth/strength.ts", "should_trigger": false},
+  {"query": "add a Content-Security-Policy header to our express app", "should_trigger": false}
+]

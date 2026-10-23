@@ -24,6 +24,17 @@ claude --plugin-dir /absolute/path/to/repo  # try it by hand, from a scratch rep
 
 CI (`.github/workflows/ci.yml`) runs the tests on Ubuntu and macOS plus `claude plugin validate .`.
 
+`evals/<skill>/triggers.json` holds 10 queries that should trigger the skill and 10 near misses. Re-run it whenever a `description` changes, with skill-creator's `run_eval`, from an empty folder that has its own `.claude/` (it writes a temporary command into the nearest `.claude/commands/`, which would otherwise be `~/.claude`):
+
+```sh
+mkdir -p /tmp/triggers/.claude && cd /tmp/triggers
+PYTHONPATH=<skill-creator>/skills/skill-creator python3 -m scripts.run_eval \
+  --eval-set /abs/path/evals/prd/triggers.json --skill-path /abs/path/skills/prd \
+  --num-workers 1 --runs-per-query 2 --timeout 60
+```
+
+Keep `--num-workers 1`: parallel workers write near-identical copies of the skill side by side, and Claude picking another worker's copy is scored as a miss.
+
 ## Workflow conventions
 
 - TDD: add a failing test (or eval, once `evals/` exists) before changing behavior.

@@ -1,0 +1,22 @@
+[
+  {"query": "write the use cases for team invites from specs/team-invites/prd.md", "should_trigger": true},
+  {"query": "what can go wrong when a user resets their password? walk me through every failure path step by step", "should_trigger": true},
+  {"query": "break the checkout PRD into use cases with a main success scenario and extensions for each step that can fail", "should_trigger": true},
+  {"query": "walk through how an admin removes a member from a workspace, including what happens if they are the last admin", "should_trigger": true},
+  {"query": "FR-3 in the book swaps PRD changed, update the use cases that trace to it", "should_trigger": true},
+  {"query": "fully dressed use case for 'cancel a subscription': actor, preconditions, guarantees, extensions", "should_trigger": true},
+  {"query": "what are the scenarios for the refund flow? i want each actor's goal written out step by step before we write any tests", "should_trigger": true},
+  {"query": "Cockburn-style use case for a driver accepting a ride request in our dispatch app", "should_trigger": true},
+  {"query": "list the actors and their goals for the library app's borrowing feature, then write a use case for each goal", "should_trigger": true},
+  {"query": "write a use case for a member returning a borrowed book at a club meeting, there's no PRD yet", "should_trigger": true},
+  {"query": "draw a UML use case diagram for the library system in PlantUML", "should_trigger": false},
+  {"query": "write backlog user stories: as a member I want to return a book so that... with story points, for Jira", "should_trigger": false},
+  {"query": "write Gherkin scenarios for specs/library/use-cases/UC-02-return-a-book.md", "should_trigger": false},
+  {"query": "spec out the borrowing feature: problem, goals, non-goals, numbered requirements", "should_trigger": false},
+  {"query": "draw a sequence diagram of the payment service calling Stripe and the webhook coming back", "should_trigger": false},
+  {"query": "document the borrowing REST endpoints in an OpenAPI 3.1 spec", "should_trigger": false},
+  {"query": "write a QA test plan for regression testing of the checkout page before release", "should_trigger": false},
+  {"query": "draw a Mermaid flowchart of the signup funnel for the README", "should_trigger": false},
+  {"query": "write Cypress e2e tests for the password reset flow", "should_trigger": false},
+  {"query": "what's the difference between a use case and a user story? keep it short", "should_trigger": false}
+]

@@ -41,5 +41,18 @@ class NfrMeasurable(unittest.TestCase):
                 self.assertFalse(self.grade.measurable(self.row(requirement)))
 
 
+class TriggerSets(unittest.TestCase):
+    # Every skill's description is checked against the same shape of set: 10 queries that should
+    # trigger it and 10 near misses, so recall and false triggers weigh the same.
+    def test_every_skill_has_a_balanced_trigger_set(self):
+        import json
+        for skill in sorted(p.parent.name for p in (ROOT / "skills").glob("*/SKILL.md")):
+            with self.subTest(skill=skill):
+                queries = json.loads((ROOT / "evals" / skill / "triggers.json").read_text())
+                self.assertEqual(len(queries), 20)
+                self.assertEqual(sum(q["should_trigger"] for q in queries), 10)
+                self.assertEqual(len({q["query"] for q in queries}), 20, "duplicate queries")
+
+
 if __name__ == "__main__":
     unittest.main()

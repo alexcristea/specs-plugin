@@ -11,5 +11,13 @@
       "without_skill": 0.607
     },
     "note": "update-keeps-ids barely discriminates: without the skill only NFR-2 fails, deleted instead of struck through, in all 3 runs. beside-prd and print do: without the skill the NFRs run past 400 words, copy the README's stack, use no fixed Verified by values and wrap --print output in a preamble."
+  },
+  "triggers": {
+    "skill_sha": "cd9d9ed",
+    "model": "claude-opus-5-5",
+    "date": "2026-10-23",
+    "passed": 19,
+    "total": 20,
+    "note": "2 runs per query, --num-workers 1. One miss in both runs: 'what are the security requirements for the password reset flow in specs/password-reset/prd.md?' reads as a lookup, so Claude reads the PRD first and run_eval only scores the first tool call."
   }
 }
