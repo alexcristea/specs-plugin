@@ -58,3 +58,7 @@ Every skill takes the same two optional flags: `/specs:<skill> [--path <path>] [
 **Quality targets are numbers, or rules a check can fail.** "Fast" can't fail a check, so every NFR has a measurable target ("95% within 2 minutes") or, for all-or-nothing targets such as access, a pass/fail rule naming who may do what ("only the owner can see who has a book"), and says how it will be verified. When a target forces a design choice, record that choice as an ADR with your architecture docs and cite the `NFR-` ID as its driver; specs say what and how well, not how.
 
 **What, not how.** Specs describe behavior an actor can observe. Steps are intentions ("admin invites Sam"), not UI clicks or database writes, so they survive a redesign.
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the tests, the evals and the rules for changing a skill.
