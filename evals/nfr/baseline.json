@@ -3,14 +3,14 @@
   "behavior": {
     "skill_sha": "cd9d9ed",
     "model": "claude-opus-5-5",
-    "date": "2026-10-23",
+    "date": "2026-10-24",
     "evals": 3,
     "runs_per_configuration": 3,
     "pass_rate": {
       "with_skill": 1.0,
-      "without_skill": 0.607
+      "without_skill": 0.589
     },
-    "note": "update-keeps-ids barely discriminates: without the skill only NFR-2 fails, deleted instead of struck through, in all 3 runs. beside-prd and print do: without the skill the NFRs run past 400 words, copy the README's stack, use no fixed Verified by values and wrap --print output in a preamble."
+    "note": "update-keeps-ids now also adds a vague reminder target and has an ADR citing NFR-1 (rerun 2026-10-24 at the same skill SHA; beside-prd and print reused from 2026-10-23). Without the skill it passes 11-12 of 14: NFR-2 is deleted instead of struck through and the reminder target's guess has no Assumed: entry in all 3 runs; it does add NFR-4 with a number and warns about ADR 0004 unprompted. beside-prd and print: without the skill the NFRs run past 400 words, copy the README's stack, use no fixed Verified by values and wrap --print output in a preamble."
   },
   "triggers": {
     "skill_sha": "cd9d9ed",

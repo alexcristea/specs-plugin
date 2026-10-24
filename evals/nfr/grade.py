@@ -77,16 +77,21 @@ def content(out):
 
 
 def update(out):
-    """update-keeps-ids: NFR-1 is tightened and NFR-2 dropped, without touching NFR-3."""
+    """update-keeps-ids: NFR-1 is tightened, NFR-2 dropped and a reminder target added, without touching NFR-3."""
     before, reqs = rows(original(out.repo, out.path)) if out.path else {}, rows(out.text)
-    nfr1, nfr2 = reqs.get("NFR-1", ""), reqs.get("NFR-2", "")
+    nfr1, nfr2, nfr4 = reqs.get("NFR-1", ""), reqs.get("NFR-2", ""), reqs.get("NFR-4", "")
     stamp = re.search(r"\| Last updated \| ([^|]+) \|", out.text)
     return {
         "NFR-1 tightened to 1 minute": (re.search(r"\b1 minute", nfr1) and "5 minutes" not in nfr1, nfr1 or "missing"),
         "NFR-2 struck through with a reason, not deleted or reused": (
             "~~" in nfr2 and re.search(r"removed|covered|dropped|replaced|platform", nfr2, re.I), nfr2 or "missing"),
         "NFR-3 unchanged": (reqs.get("NFR-3") == before.get("NFR-3"), reqs.get("NFR-3", "missing")),
+        "Reminder requirement added as NFR-4, scoped to FR-6": (
+            "~~" not in nfr4 and re.search(r"\bFR-6\b", nfr4), nfr4 or "missing"),
         "Last updated bumped": (stamp and stamp.group(1).strip() != "2026-01-01", stamp.group(1) if stamp else "none"),
+        # the ADR batches notifications every 5 minutes, which a 1-minute target rules out
+        "Warned that ADR 0004 cites the tightened NFR-1": (
+            re.search(r"0004|batch-borrow-notifications", out.notes), "ADR 0004 named in notes.md"),
     }
 
 

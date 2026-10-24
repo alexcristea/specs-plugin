@@ -29,8 +29,8 @@
       "name": "update-keeps-ids",
       "fixture": "update.sh",
       "cwd": ".",
-      "prompt": "/specs:nfr --path docs/specs/book-swaps/nfr.md borrow requests should reach the owner within 1 minute, not 5. And drop NFR-2, the platform availability target covers it now.",
-      "expected_output": "nfr.md updated in place: NFR-1 now says 1 minute, NFR-2 struck through with a reason, NFR-3 unchanged, nothing renumbered, Last updated bumped.",
+      "prompt": "/specs:nfr --path docs/specs/book-swaps/nfr.md borrow requests should reach the owner within 1 minute, not 5. Drop NFR-2, the platform availability target covers it now. And add one for the 30-day reminders (FR-6): they shouldn't go missing.",
+      "expected_output": "nfr.md updated in place: NFR-1 now says 1 minute, NFR-2 struck through with a reason, NFR-3 unchanged, the reminder target added as NFR-4 with a number, a Verified by value and an Assumed: entry, nothing renumbered, Last updated bumped; the reply warns that ADR 0004 relies on the 5-minute target.",
       "path": "^docs/specs/book-swaps/nfr\\.md$",
       "assertions": [
         "NFR file written beside the PRD",
@@ -38,7 +38,12 @@
         "NFR-1 tightened to 1 minute",
         "NFR-2 struck through with a reason, not deleted or reused",
         "NFR-3 unchanged",
+        "Reminder requirement added as NFR-4, scoped to FR-6",
+        "Every requirement is measurable (a number, or a pass/fail rule)",
+        "Every requirement says how it is verified (Scenario, Load test, Monitoring, Review)",
+        "Guesses listed as Assumed: under Open questions",
         "Last updated bumped",
+        "Warned that ADR 0004 cites the tightened NFR-1",
         "No implementation detail from the README's stack",
         "Reported the path back to the user (notes.md)",
         "Not committed"
