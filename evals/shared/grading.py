@@ -3,6 +3,7 @@ import json
 import re
 import subprocess
 from pathlib import Path
+from types import SimpleNamespace
 
 # the fixture README's stack; a spec says what and how well, so none of it belongs in one
 STACK = re.compile(r"\b(react|node|postgres(ql)?|elasticsearch|redis|sql|api endpoint|websocket)\b", re.I)
@@ -35,6 +36,24 @@ def original(repo, path):
 
 def committed(repo):
     return git(repo, "rev-parse", "HEAD").strip() != head(repo)
+
+
+def output(case, run_dir, fallback=None):
+    """What a run produced: the reply (notes), the changed paths, the ones the case expects (hits),
+    and the spec text, from the reply with --print, else from the first hit. With fallback (a suffix),
+    a spec written somewhere unexpected is still read, so its content is graded apart from its path."""
+    repo, notes_path = run_dir / "repo", run_dir / "notes.md"
+    notes = notes_path.read_text() if notes_path.exists() else ""
+    paths = changed(repo)
+    hits = [p for p in paths if re.search(case["path"], p)]
+    path = hits[0] if hits else None
+    if fallback and not path and not case.get("print"):
+        path = next((p for p in paths if p.endswith(fallback)), None)
+    if case.get("print"):
+        text = notes
+    else:
+        text = (repo / path).read_text() if path and (repo / path).exists() else ""
+    return SimpleNamespace(repo=repo, notes=notes, paths=paths, hits=hits, path=path, text=text)
 
 
 def section(text, title):

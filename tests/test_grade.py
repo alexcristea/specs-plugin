@@ -41,6 +41,19 @@ class NfrMeasurable(unittest.TestCase):
                 self.assertFalse(self.grade.measurable(self.row(requirement)))
 
 
+class GradersShareHelpers(unittest.TestCase):
+    # A fix to git state, sections or word counts in evals/shared/grading.py must reach every grader,
+    # so no grader keeps its own copy.
+    def test_no_grader_redefines_a_shared_helper(self):
+        import ast
+        shared = {n.name for n in ast.parse((ROOT / "evals/shared/grading.py").read_text()).body
+                  if isinstance(n, ast.FunctionDef)}
+        for grader in sorted((ROOT / "evals").glob("*/grade.py")):
+            with self.subTest(grader=grader.parent.name):
+                own = {n.name for n in ast.parse(grader.read_text()).body if isinstance(n, ast.FunctionDef)}
+                self.assertFalse(own & shared, "use evals/shared/grading.py")
+
+
 class TriggerSets(unittest.TestCase):
     # Every skill's description is checked against the same shape of set: 10 queries that should
     # trigger it and 10 near misses, so recall and false triggers weigh the same.
